@@ -1,0 +1,115 @@
+{% extends "recipesite/layout.html" %}
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{% block body %}
+<div class="container">
+{% load crispy_forms_tags %}
+<form role="form" action="" method="post" enctype="multipart/form-data">
+        <div class="row gx-5">
+        {% csrf_token %}
+                <fieldset class="m-5">                
+                        <div class="container">
+                                <legend>Recipe Information</legend>
+                                <div class="row gx-4 mt-4">
+                                        <div class="col">{% bootstrap_field form.name layout="inline" %}</div>
+                                </div>
+                                        <div class="col">{% bootstrap_field form.recipe_img layout="inline" %}</div>
+                                </div>
+                                <div class="row justify-content-around mt-4 gx-4">
+                                        <div class='col-4 preptime mt-4'>                                                
+                                                <div class="container">
+                                                        <div class="row align-items-center">
+                                                                <caption>Prep Time</caption>
+                                                                <div class="col-md">{% bootstrap_field form.prepHour layout="inline" show_label="false" %}</div>
+                                                                <div class="col-md">{% bootstrap_field form.prepMin layout="inline" show_label="false" %}</div>
+                                                        </div>
+                                                </div>
+                                        </div>           
+                                        <div class='col-4 cooktime mt-4'>                                        
+                                                <div class="container">
+                                                        <div class="row align-items-center"> 
+                                                                <caption>Cook Time</caption>
+                                                                <div class="col">{% bootstrap_field form.cookHour layout="inline" show_label="false" %}</div>
+                                                                <div class="col">{% bootstrap_field form.cookMin layout="inline" show_label="false" %}</div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="row gx-4 mt-4"><div class="col">{% bootstrap_field form.description layout="inline" %}</div></div>
+                                <div class="row justify-content-around mt-4 gx-4">
+                                        <div class='col-4 preptime mt-4'>                                        
+                                                <div class="container">
+                                                        <div class="row align-items-center">
+                                                                <caption>Difficulty</caption>
+                                                                <div class="col-md">{% bootstrap_field form.skillLevel layout="inline" show_label="false" %}</div>
+                                                        </div>
+                                                </div>
+                                        </div>           
+                                        <div class='col-4 cooktime mt-4'>                                        
+                                                <div class="container">
+                                                        <div class="row align-items-center"> 
+                                                                <caption>Servings / Quantity</caption>
+                                                                <div class="col">{% bootstrap_field form.servingQuantity layout="inline" show_label="false" %}</div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>                                
+                </fieldset>
+                <fieldset class="m-5">
+                        {{ ingredientformset.management_form }}
+                        {{ ingredientformset.non_form_errors }}
+                        <div class="container">
+                                <legend>Ingredients</legend>
+                                <div class="row mt-4">
+                                        <div class='col ingredientsingle'>                                                
+                                                <div class="container">
+                                                        <div class="row align-items-center mt-1">
+                                                                <div class="col-md-3"><center>Quantity</center></div>
+                                                                <div class="col-md-2">Unit</div>
+                                                                <div class="col-md-3">Ingredient</div>
+                                                                <div class="col-md-4">Instructions</div>
+                                                        </div>
+                                                        {% for ingr in ingredientformset %}
+                                                        <div class="row align-items-center mt-3 inline {{ ingredientformset.prefix }}">
+                                                                <div class="col-md-1">{{ ingr.id }}{% bootstrap_field ingr.quantitywhole layout="inline" size="sm" %}</div>
+                                                                <div class="col-md-2">{% bootstrap_field ingr.quantityfraction layout="inline" size="sm" %}</div>
+                                                                <div class="col-md-2">{% bootstrap_field ingr.unitId layout="inline" size="sm" %}</div>
+                                                                <div class="col-md-2">{% bootstrap_field ingr.name layout="inline" %}</div>
+                                                                <div class="col-md-3">{% bootstrap_field ingr.description layout="inline" %}</div>
+                                                        </div>
+                                                        
+                                                        {% endfor %}
+                                                </div>
+                                        </div> 
+                                </div>
+                        </div>      
+                </fieldset>
+                <fieldset class="m-5">
+                        {{ stepformset.management_form }}
+                        {{ stepformset.non_form_errors }}
+                        <div class="container">
+                                <legend>Steps</legend>
+                                <div class="row mt-4">
+                                        <div class='col stepformsingle'>                                                
+                                                <div class="container">
+                                                        {% for step in stepformset %}
+                                                        <div class="row align-items-center mt-3 inline {{ stepformset.prefix }}">
+                                                                <div class="col-md-9">{{ step.id }}{% bootstrap_field step.step layout="inline" %}</div>
+                                                        </div>                                                        
+                                                        {% endfor %}
+                                                </div>
+                                        </div> 
+                                </div>
+                        </div>      
+                </fieldset>
+        
+                <div class="row">
+                        <div class="col-md-1">
+                                <input type="submit" id="triggerbutton" class="btn btn-primary card-link" value="Save Recipe" />
+                        </div>
+                </div>
+        </div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "recipesite/layout.html" %}
+{# Load the tag library #}
+{% load bootstrap5 %}
+{% block body %}
+    {% for recipe in recipes_listview %}
+        {% include "recipesite/snippets/bootcard.html" %}
+    {% empty %}
+        <p>There are no Post to view at this time.</p>
+    {% endfor %}
+
+    {% bootstrap_pagination page_obj %}
+{% endblock %}
+

@@ -1,0 +1,16 @@
+{% extends "recipesite/layout.html" %}
+{# Load the tag library #}
+{% load bootstrap5 %}
+{% block body %}
+<div class="container">
+
+    
+    <ul>
+    {% for x in data %}
+        <li>{{ x }}</li>
+    {% endfor %}
+    </ul>
+
+
+</div>
+{% endblock %}

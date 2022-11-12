@@ -1,0 +1,35 @@
+from selenium import webdriver
+from django.core import management
+from behave import *
+
+
+def before_all(context):
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("--headless")
+    # chrome_options.binary_location = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+    #caps = webdriver.DesiredCapabilities.CHROME.copy()
+    #caps['acceptInsecureCerts'] = True
+    context.driver = webdriver.Remote(
+        'http://192.168.86.12:4444/wd/hub', 
+        options=chrome_options, 
+        #desired_capabilities=caps
+        )
+    # context.driver.implicitly_wait(10)
+    context.base_url = "http://127.0.0.1:8000"
+    
+def before_scenario(context, scenario):
+    # Reset the database before each scenario
+    # This means we can create, delete and edit objects within an
+    # individual scenerio without these changes affecting our
+    # other scenarios
+    # management.call_command('flush', verbosity=0, interactive=False)
+
+    # At this stage we can (optionally) generate additional data to setup in the database.
+    # For example, if we know that all of our tests require a 'SiteConfig' object,
+    # we could create it here.
+    pass
+
+def after_all(context):
+    # Quit our browser once we're done!
+    context.driver.quit()
+    context.driver = None

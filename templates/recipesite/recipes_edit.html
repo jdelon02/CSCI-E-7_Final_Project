@@ -1,0 +1,153 @@
+{% extends "recipesite/layout.html" %}
+{# Load the tag library #}
+{{ formset.media }}
+{% load static %}
+{% load bootstrap5 %}
+{% load formset_tags %}
+{% block body %}
+<div class="container">
+
+<form role="form" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row gx-5">
+                <fieldset class="m-5">                
+                        <div class="container">
+                                <legend>Recipe Information</legend>
+                                <div class="row gx-4 mt-4">
+                                        <div class="col">{% bootstrap_field form.name layout="inline" required_css_class="required" %}</div>
+                                </div>
+                                        <div class="col">{% bootstrap_field form.recipe_img layout="inline" %}</div>
+                                </div>
+                                <div class="row justify-content-around mt-4 gx-4">
+                                        <div class='col-4 preptime mt-4'>                                                
+                                                <div class="container">
+                                                        <div class="row align-items-center">
+                                                                <caption>Prep Time</caption>
+                                                                <div class="col-md">{% bootstrap_field form.prepHour layout="inline" show_label="false" %}</div>
+                                                                <div class="col-md">{% bootstrap_field form.prepMin layout="inline" show_label="false" %}</div>
+                                                        </div>
+                                                </div>
+                                        </div>           
+                                        <div class='col-4 cooktime mt-4'>                                        
+                                                <div class="container">
+                                                        <div class="row align-items-center"> 
+                                                                <caption>Cook Time</caption>
+                                                                <div class="col">{% bootstrap_field form.cookHour layout="inline" show_label="false" %}</div>
+                                                                <div class="col">{% bootstrap_field form.cookMin layout="inline" show_label="false" %}</div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="row gx-4 mt-4"><div class="col">{% bootstrap_field form.description layout="inline" required_css_class="required" %}</div></div>
+                                <div class="row justify-content-around mt-4 gx-4">
+                                        <div class='col-4 preptime mt-4'>                                        
+                                                <div class="container">
+                                                        <div class="row align-items-center">
+                                                                <caption>Difficulty</caption>
+                                                                <div class="col-md">{% bootstrap_field form.skillLevel layout="inline" show_label="false" %}</div>
+                                                        </div>
+                                                </div>
+                                        </div>           
+                                        <div class='col-4 cooktime mt-4'>                                        
+                                                <div class="container">
+                                                        <div class="row align-items-center"> 
+                                                                <caption>Servings / Quantity</caption>
+                                                                <div class="col">{% bootstrap_field form.servingQuantity layout="inline" show_label="false" %}</div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>                                
+                </fieldset>
+                <fieldset class="m-5">
+                        {{ ingredientformset.management_form }}
+                        {{ ingredientformset.non_form_errors }}
+                        <div class="container">
+                                <legend>Ingredients</legend>
+                                <caption><i>Before Saving, be sure to remove any unused rows, otherwise save will fail.</i></caption>
+                                <div class="row mt-4">
+                                        <div class='col ingredientsingle'>                                                
+                                                <div class="container">
+                                                        <div class="row align-items-center mt-1">
+                                                                <div class="col-md-3"><center>Quantity</center></div>
+                                                                <div class="col-md-2">Unit</div>
+                                                                <div class="col-md-3">Ingredient*</div>
+                                                                <div class="col-md-4">Instructions</div>
+                                                        </div>
+                                                        {% for ingr in ingredientformset %}
+                                                        {{ ingr.id }}
+                                                        {% for fld in ingr.hidden_fields %}{{ fld }}{% endfor %}
+                                                        {% if ingr.instance.pk %}{{ ingr.DELETE }}{% endif %}
+                                                        <div class="row align-items-center mt-3 inline {{ ingredientformset.prefix }}">
+                                                                <div class="col-md-1">{% bootstrap_field ingr.quantitywhole layout="inline" size="sm" %}</div>
+                                                                <div class="col-md-2">{% bootstrap_field ingr.quantityfraction layout="inline" size="sm" %}</div>
+                                                                <div class="col-md-2">{% bootstrap_field ingr.unitId layout="inline" size="sm" %}</div>
+                                                                <div class="col-md-2">{% bootstrap_field ingr.name layout="inline" required_css_class="required"  %}</div>
+                                                                <div class="col-md-3">{% bootstrap_field ingr.description layout="inline" %}</div>
+                                                        </div>
+                                                        
+                                                        {% endfor %}
+                                                </div>
+                                        </div> 
+                                </div>
+                        </div>      
+                </fieldset>
+                
+                <fieldset class="m-5">
+                        
+                        {{ stepformset.non_form_errors }}
+                        <div class="container">
+                                <legend>Steps</legend>
+                                <caption><i>Before Saving, be sure to remove any unused rows, otherwise save will fail.</i></caption>
+                                <div class="row mt-4">
+                                        <div class='col stepformsingle'>                                                
+                                                <div class="container">
+                                                        {% for step in stepformset %}
+                                                        {{ step.id }}
+                                                        <div class="row align-items-center mt-3 inline {{ stepformset.prefix }}">
+                                                                <div class="col-md-9">{% bootstrap_field step.step layout="inline" %}</div>
+                                                        </div>                                                        
+                                                        {% endfor %}
+                                                        {{ stepformset.management_form }}
+                                                </div>
+                                        </div> 
+                                </div>
+                        </div>      
+                </fieldset>
+                        <b>* = Required Field.</b>
+                <div class="row">
+                        
+                        <div class="col-md-1">
+                                <input type="submit" id="triggerbutton" class="btn btn-primary card-link" value="Save Recipe" />
+                        </div>
+                </div>
+        </div>
+</form>
+</div>
+{% endblock %}
+{% load static %}
+{% block script %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="{% static "django-dynamic-formset/src/jquery.formset.js" %}"></script>
+        <script type="text/javascript">
+            $(function() {
+                $(".inline.{{ ingredientformset.prefix }}").formset({
+                    prefix: "{{ ingredientformset.prefix }}", // The form prefix for your django formset
+                    addCssClass: "btn btn-block btn-primary bordered", // CSS class applied to the add link
+                    deleteCssClass: "btn btn-block btn-primary bordered", // CSS class applied to the delete link
+                    addText: 'Add Ingredient', // Text for the add link
+                    deleteText: 'Remove', // Text for the delete link,
+                    // {% if request.method == "GET" %} hideLastAddForm: true, {% endif %}
+                    // formCssClass: 'inline-table' // CSS class applied to each form in a formset
+                })
+
+                $(".inline.{{ stepformset.prefix }}").formset({
+                    prefix: "{{ stepformset.prefix }}", // The form prefix for your django formset
+                    addCssClass: "btn btn-block btn-primary bordered", // CSS class applied to the add link
+                    deleteCssClass: "btn btn-block btn-primary bordered", // CSS class applied to the delete link
+                    addText: 'Add Step', // Text for the add link
+                    deleteText: 'Remove', // Text for the delete link
+                    // formCssClass: 'container' // CSS class applied to each form in a formset
+                })
+            });
+</script>
+{% endblock %}

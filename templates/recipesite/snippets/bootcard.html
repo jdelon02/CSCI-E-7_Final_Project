@@ -1,0 +1,21 @@
+<div class="col-sm-4 col-md-6 col-lg-4 my-3">
+    <div class="card shadow" style="width: 18rem;" id="card-{{ recipe.id }}">
+        <a href="{% url 'recipedetail' pk=recipe.id %}"><img src="{{ recipe.recipe_img.url }}" class="card-img" alt="Recipe Image" /></a>
+        <div class="card-body">
+            <a href="{% url 'recipedetail' pk=recipe.id %}" class="text-reset text-decoration-none">
+                <figure class="text-start">
+                        <blockquote class="blockquote">
+                            <h5 class="card-title">{{ recipe.name }}</h5>
+                        </blockquote>
+                        <figcaption class="blockquote-footer">
+                                <cite title="Source Title">{{ recipe.author.username }}</cite> on {{ recipe.timestamp }}
+                        </figcaption>
+                </figure>
+                <p id="body-{{recipe.id }}" class="text-reset my-4 card-text">{{ recipe.description }}</p>
+            </a>
+            <button disabled id="{{ recipe.id }}" value="Likes: {{ recipe.total_likes }}" data-id="{{ recipe.id }}" data-postuser="{{ recipe.author.id }}" data-currentuser="{{ recipe.author.username }}" class="btn btn-sm btn-outline-primary card-link" onClick=likebutton(this);>{{ recipe.total_likes }} Likes</button>
+            <a id="readmore" href="{% url 'recipedetail' pk=recipe.id %}" class="btn btn-sm btn-primary card-link float-end">Read More</a>
+
+        </div>
+    </div>
+</div>

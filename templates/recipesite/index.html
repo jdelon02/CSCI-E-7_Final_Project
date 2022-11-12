@@ -1,0 +1,30 @@
+{% extends "recipesite/layout.html" %}
+{# Load the tag library #}
+{% load static %}
+{% load bootstrap5 %}
+{% block body %}
+{% load crispy_forms_tags %}
+<div class="container">
+    <form role="form" action="" method="post">
+        <div class="row gx-5">
+        {% csrf_token %}
+            <fieldset class="m-5">                
+                <div class="container">
+                    <div class="row gx-5 my-5" data-masonry='{"percentPosition": true }'>
+                    {% for recipe in recipes_listview %}
+                        {% include "recipesite/snippets/bootcard.html" %}
+                    {% empty %}
+                        <p>There are no Post to view at this time.</p>
+                    {% endfor %}
+                    </div>
+                </div>
+            </fieldset>
+            {% bootstrap_pagination page_obj %}
+        </div>
+    </form>
+</div>                    
+{% endblock %}
+{% block script %}
+{% include "recipesite/snippets/masonry.html" %}
+<script src="{% static 'recipesite/index.js' %}" defer></script>
+{% endblock %}

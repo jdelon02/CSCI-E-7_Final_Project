@@ -1,0 +1,13 @@
+{% extends "recipesite/layout.html" %}
+
+
+{% block body %}
+
+
+{% load crispy_forms_tags %}
+<form action="{% url 'ingr-add' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

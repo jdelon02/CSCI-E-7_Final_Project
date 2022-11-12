@@ -1,0 +1,37 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = false
+name = "pypi"
+
+[packages]
+django = "==3.2.16"
+django-formset-js = "*"
+django-crispy-forms = "*"
+django-bootstrap5 = "*"
+crispy-bootstrap5 = "*"
+django-debug-panel = "*"
+django-behave = "*"
+lxml = "*"
+django-static-jquery = "*"
+django-bootstrap-v5 = "*"
+django-model-utils = "==1.1.0"
+django-easy-select2 = "*"
+pillow = "*"
+extruct = "*"
+setuptools = "*"
+wheel = "*"
+recipe-scrapers = "*"
+django-clearcache = "*"
+openeats-recipe-scraper = "*"
+cloudscraper = "*"
+
+[dev-packages]
+coverage = "*"
+tox = "*"
+sphinx = "*"
+flake8 = "*"
+selenium = "*"
+
+[requires]
+python_version = "3.8"
+python_full_version = "3.8.10"

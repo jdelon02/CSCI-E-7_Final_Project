@@ -1,0 +1,144 @@
+{% extends "recipesite/layout.html" %}
+{# Load the tag library #}
+{% load bootstrap5 %}
+{% block body %}
+<div class="container">
+        <div class="row gx-5">
+                <fieldset class="m-5">                
+                        <div class="container">
+                                <div class="row justify-content-around mt-4 gx-4">
+                                        <div class="col-sm-4 likebutton mt-4">
+                                                <div class="container">
+                                                        <div class="row">
+                                                                <div class="col-sm-12">
+                                                                        {% if user.username|stringformat:"s" == object.author.username|stringformat:"s" %}
+                                                                                <a id="edit-{{ object.id }}" class="btn btn-primary card-link-edit" href={% url 'recipeupdate' pk=object.id %}>Edit</a>
+                                                                        {% endif %}
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                        <div class="row gx-4 mt-4">
+                                <div class="col-sm-6">
+                                        <h1>{{ object.name }}</h1>
+                                        <figure class="text-end">
+                                                <blockquote class="blockquote">
+                                                        <p>{{ object.description }}</p>
+                                                </blockquote>
+                                                <figcaption class="blockquote-footer">
+                                                        Created by: <cite title="Source Title">{{ object.author.username }}</cite> on {{ object.timestamp }}
+                                                </figcaption>
+                                        </figure>
+                                        <div>
+                                                {% if user.is_authenticated and user.username|stringformat:"s" != object.author.username|stringformat:"s" %}
+                                                {% csrf_token %}
+                                                <button id="{{ object.id }}" value="Likes: {{ object.total_likes }}" data-id="{{ object.id }}" data-postuser="{{ object.author.id }}" data-currentuser="{{ user.id }}" class="btn btn-primary card-link" onClick=likebutton(this);>{{ object.total_likes }} Likes</button>
+                                                <button id="save-{{ object.id }}" value="Bookmark This" data-id="{{ object.id }}" data-postuser="{{ object.author.id }}" data-currentuser="{{ user.id }}" class="btn btn-primary card-link" onClick=savebutton(this);>{{ bookmark }}</button>
+                                                {% endif %} 
+                                        </div>  
+                                </div>
+                                <div class="col-sm-5"><img src="{{ object.recipe_img.url }}" class="img-fluid rounded"></div>
+                        </div>
+                        <div class="row gx-4 mt-4"></div>
+                        <div class="row justify-content-around mt-4 gx-4">
+                                <div class='col-md-4 col-sm-12 preptime mt-4'>                                                
+                                        <div class="container">
+                                                <div class="row align-items-center">
+                                                                <div class="col-sm">
+                                                                        {% if object.prepHour|stringformat:"s" != 'None' and object.prepMin|stringformat:"s" != 'None' %}
+                                                                                <caption>Prep Time:</caption>
+                                                                                {% if object.prepHour|stringformat:"s" != 'None' %}{{ object.prepHour }}h :{% endif %}
+                                                                                {% if object.prepMin|stringformat:"s" != 'None' %}{{ object.prepMin }}m{% endif %}
+                                                                        {% endif %}
+                                                                </div>                                                                
+                                                        </div>
+                                                </div>
+                                        </div>           
+                                        <div class='col-md-4 col-sm-12 cooktime mt-4'>                                        
+                                                <div class="container">
+                                                        <div class="row align-items-center"> 
+                                                                <div class="col-sm-12">
+                                                                        {% if object.cookHour|stringformat:"s" != 'None' and object.cookMin|stringformat:"s" != 'None' %}
+                                                                                <caption>Cook Time:</caption> 
+                                                                                {% if object.cookHour|stringformat:"s" != 'None' %}{{ object.cookHour }}h :{% endif %}
+                                                                                {% if object.cookMin|stringformat:"s" != 'None' %}{{ object.cookMin }}m{% endif %}
+                                                                        {% endif %}
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="row justify-content-around mt-4 gx-4">
+                                        <div class='col-md-4 col-sm-12 preptime mt-4'>                                        
+                                                <div class="container">
+                                                        <div class="row align-items-center">
+                                                                <div class="col-sm-12">
+                                                                        {% if object.skillLevel|stringformat:"s" != 'None' %}
+                                                                        <caption>Difficulty:</caption> {{ object.skillLevel }}</div>
+                                                                        {% endif %}
+                                                        </div>
+                                                </div>
+                                        </div>           
+                                        <div class='col-md-4 col-sm-12 cooktime mt-4'>                                        
+                                                <div class="container">
+                                                        <div class="row align-items-center"> 
+                                                                <div class="col-sm-12">
+                                                                        {% if object.servingQuantity|stringformat:"s" != 'None' %}
+                                                                        <caption>Servings / Quantity:</caption> {{ object.servingQuantity }}</div>
+                                                                        {% endif %}
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>                                
+                </fieldset>
+                <fieldset class="m-5">
+                        <div class="container">
+                                <h4>Ingredients</h4>
+                                <div class="row mt-4">
+                                        <div class='col ingredientsingle'>                                                
+                                                <div class="container">
+                                                        <div class="row align-items-center mt-1">
+                                                                <div class="col-sm-3"><h5><center>Quantity</center></h5></div>
+                                                                <div class="col-sm-2"><h5>Unit</h5></div>
+                                                                <div class="col-sm-3"><h5>Ingredient</h5></div>
+                                                                <div class="col-sm-4"><h5>Instructions</h5></div>
+                                                        </div>
+                                                        {% for ingr in ingredientlist %}
+                                                        <div class="row align-items-center mt-3">
+                                                                <div class="col-sm-1 text-end">{{ ingr.quantitywhole }}</div>
+                                                                <div class="col-sm-2">{{ ingr.quantityfraction }}</div>
+                                                                <div class="col-sm-2">{{ ingr.unitId }}</div>
+                                                                <div class="col-sm-3">{{ ingr.name }}</div>
+                                                                <div class="col-sm-4">{{ ingr.description }}</div>
+                                                        </div>
+                                                        {% empty %}
+                                                        <div class="row align-items-center mt-3">
+                                                                <div colspan="12">There are no Ingredients.</div>
+                                                        </div>
+                                                        {% endfor %}                                                    
+                                                </div>
+                                        </div> 
+                                </div>
+                        </div>      
+                </fieldset>
+                <fieldset class="m-5">
+                        <div class="container">
+                        <h4>Steps</h4>
+                        <div class="row mt-4">
+                                <div class='col stepsingle'>                                                
+                                        <div class="container">
+                                                <div class="accordion" id="accordionExample">
+                                                        {% for step in steplist %}
+                                                                {% include "recipesite/snippets/accordion.html" %}
+                                                        {% endfor %}
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </fieldset>
+        </div>
+</div>
+{% endblock %}
