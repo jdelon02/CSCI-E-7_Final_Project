@@ -1,5 +1,6 @@
 """Data models."""
 from django.db import models
+
 from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.translation import gettext_lazy as _
@@ -16,7 +17,8 @@ from django.db.models import (
     IntegerField,
     ImageField
 )
-from . import User, Ingredients
+
+from . import Ingredients
 
 # TODO: Description Field to model, recipe.
 class Recipes(Model):
@@ -89,7 +91,7 @@ class Recipes(Model):
         null=True    
     )
     author = ForeignKey(
-        User, 
+        'login.User', 
         on_delete=CASCADE,
         related_name='author_User',
         blank=True,
@@ -100,7 +102,7 @@ class Recipes(Model):
         blank=True
     )
     likes = ManyToManyField(
-        User,
+        'login.User',
         blank=True,
         related_name='likes'
     )

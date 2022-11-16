@@ -39,17 +39,18 @@ urlpatterns = [
     # path("scrape", scrape_view.Index, name='scrape'),
     # path('author/<int:pk>/delete/', recipe_view.RecipeDeleteView.as_view(), name='recipe-delete'),
     
-    path('login/', user_view.login_view, name="login"),
+    # path('login/', user_view.login_view, name="login"),
     #path("login", auth_views.LoginView.as_view(template_name='core/login.html'), name='core_login'),
-    path('logout', user_view.logout_view, name="logout"),
+    # path('logout', user_view.logout_view, name="logout"),
     #path("logout", auth_views.LogoutView.as_view(), name='core_logout'),
 
-    path("register", user_view.register, name="register"),
-    path("user/<int:pk>", user_view.UserDetailView.as_view(), name="user_detail"),
+    # path("register", user_view.register, name="register"),
+    # path("user/<int:pk>", user_view.UserDetailView.as_view(), name="user_detail"),
     # path("ingredients", ingredients_view.Index.as_view(), name="ingredients"),
     # path('ingredients/add/', IngredientsCreateView.as_view(), name='ingr-add'),
     
     path('', include('apps.scrape.urls')),
+    path('', include('apps.login.urls')),
   
     
     

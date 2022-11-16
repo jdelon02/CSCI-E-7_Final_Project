@@ -11,9 +11,9 @@ from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.contrib import messages
 from django.views.generic import ListView, DetailView
-from apps.login.models import User, UserFollowing
-from ..models import Recipes
-from ..forms import recipesform
+from apps.login.models import User, UserFollowing 
+from recipesite.models import Recipes
+from recipesite.forms import recipesform
 
 
 def login_view(request):

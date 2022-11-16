@@ -39,8 +39,6 @@ sys.path.append(normpath(join(PROJECT_ROOT, 'apps')))
 
 # these are the apps
 DEFAULT_APPS = [
-    'recipesite',
-    'apps.scrape',
     'djangoformsetjs',
     'crispy_forms',
     'bootstrap5',
@@ -57,6 +55,9 @@ DEFAULT_APPS = [
     'django_static_jquery',
     'lxml',
     'django_behave',
+    'recipesite',
+    'apps.login',
+    'apps.scrape',
 ]
 
 # Middlewares
@@ -105,7 +106,7 @@ USE_I18N = False
 # The required SECRET_KEY is fetched at the end of this file
 SECRET_FILE = normpath(join(PROJECT_ROOT, 'run', 'SECRET.key'))
 
-AUTH_USER_MODEL = "recipesite.User"
+AUTH_USER_MODEL = "login.User"
 
 # these persons receive error notification
 ADMINS = (
