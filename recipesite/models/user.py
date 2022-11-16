@@ -2,6 +2,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models import DateTimeField, ManyToManyField, CASCADE
+# from recipesite.models import Recipes
+
 
 class User(AbstractUser):
     """ This is a docstring which describes the model """

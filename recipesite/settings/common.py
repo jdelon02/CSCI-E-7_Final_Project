@@ -40,6 +40,7 @@ sys.path.append(normpath(join(PROJECT_ROOT, 'apps')))
 # these are the apps
 DEFAULT_APPS = [
     'recipesite',
+    'apps.scrape',
     'djangoformsetjs',
     'crispy_forms',
     'bootstrap5',

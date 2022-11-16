@@ -17,7 +17,7 @@ class Bookmarks(Model):
         on_delete=CASCADE,
         related_name='recipes'
     )
-    
+
     
     def __str__(self):
         return str(self.id)

@@ -6,7 +6,7 @@ it didn't like 2 foreign keys to same model.
 """
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from .user import User
+from . import User
 from django.db.models import (
     Model,
     CASCADE,

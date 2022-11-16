@@ -109,6 +109,7 @@ class Recipes(Model):
         upload_to='images/'
         )
 
+
     @property
     def total_likes(self):
         return self.likes.count() 

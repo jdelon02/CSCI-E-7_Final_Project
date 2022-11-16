@@ -36,7 +36,7 @@ urlpatterns = [
     path('recipe/<int:pk>/edit', recipe_view.RecipeUpdateView.as_view(), name='recipeupdate'),
     path('recipe/', recipe_view.Index.as_view(), name='recipesearch'),
     path("bookmarks", recipe_view.BookmarkListView.as_view(), name="bookmarks"),
-    path("scrape", scrape_view.Index, name='scrape'),
+    # path("scrape", scrape_view.Index, name='scrape'),
     # path('author/<int:pk>/delete/', recipe_view.RecipeDeleteView.as_view(), name='recipe-delete'),
     
     path('login/', user_view.login_view, name="login"),
@@ -48,6 +48,10 @@ urlpatterns = [
     path("user/<int:pk>", user_view.UserDetailView.as_view(), name="user_detail"),
     # path("ingredients", ingredients_view.Index.as_view(), name="ingredients"),
     # path('ingredients/add/', IngredientsCreateView.as_view(), name='ingr-add'),
+    
+    path('', include('apps.scrape.urls')),
+  
+    
     
     # API Routes
     path("api/recipe/<int:recipe_id>",recipe_view.RecipeDetailView.like_button, name='like'),

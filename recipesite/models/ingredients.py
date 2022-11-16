@@ -35,7 +35,7 @@ class Ingredients(Model):
     )
     """Data model for user accounts."""
     recipe = ForeignKey(
-        'Recipes',
+        'recipesite.Recipes',
         on_delete=CASCADE,
         related_name='recipe_Recipes',
         blank=True,
@@ -68,6 +68,9 @@ class Ingredients(Model):
         blank=True,
         null=True
     )
+    
+    class Meta:
+        app_label = 'recipesite.Ingredients'
 
     def __str__(self):
         return self.name
