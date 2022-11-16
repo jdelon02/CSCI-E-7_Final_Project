@@ -5,9 +5,9 @@ from model_utils import Choices
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.forms import CharField, ModelForm, inlineformset_factory, ChoiceField, Select, Textarea
-from recipesite.forms.ingredientsform import IngredientsForm
-from recipesite.forms.stepsform import StepForm
-from recipesite.models import Recipes, Ingredients, Steps
+from apps.recipes.forms.ingredientsform import IngredientsForm
+from apps.recipes.forms.stepsform import StepForm
+from apps.recipes.models import Recipes, Ingredients, Steps
 from easy_select2 import select2_modelform, Select2
 
 

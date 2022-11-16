@@ -12,8 +12,8 @@ from django.views import View
 from django.contrib import messages
 from django.views.generic import ListView, DetailView
 from apps.login.models import User, UserFollowing 
-from recipesite.models import Recipes
-from recipesite.forms import recipesform
+from apps.recipes.models import Recipes
+from apps.recipes.forms import recipesform
 
 
 def login_view(request):

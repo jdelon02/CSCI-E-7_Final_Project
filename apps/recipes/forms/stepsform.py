@@ -2,7 +2,7 @@
 from curses.ascii import US
 from django.forms import CharField, ModelForm, Textarea
 from django.forms import ModelForm
-from recipesite.models import Steps
+from recipes.models import Steps
 
 
 class StepForm(ModelForm):

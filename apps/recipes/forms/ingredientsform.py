@@ -4,7 +4,7 @@ from django.forms import ModelForm
 from django.utils.translation import gettext_lazy as _
 from model_utils import Choices
 from django.forms import ModelForm, inlineformset_factory, CharField, ChoiceField, Select
-from recipesite.models.ingredients import Ingredients
+from apps.recipes.models import Ingredients
 
 
 

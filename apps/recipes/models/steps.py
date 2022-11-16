@@ -10,6 +10,7 @@ from django.db.models import (
     ForeignKey,
     CharField,
 )
+from apps.recipes.models import Recipes
 
 # TODO: Description Field to model, recipe.
 class Steps(Model):
@@ -18,13 +19,15 @@ class Steps(Model):
         max_length = 240
     )
     recipe = ForeignKey(
-        'Recipes',
+        Recipes,
         on_delete=CASCADE,
         related_name='recipe_Steps',
         blank=True,
         null=True
     )
 
+    class Meta:
+        app_label = 'recipes'  
         
     def __str__(self):
         return self.step

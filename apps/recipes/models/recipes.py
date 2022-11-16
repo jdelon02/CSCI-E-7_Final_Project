@@ -18,7 +18,8 @@ from django.db.models import (
     ImageField
 )
 
-from . import Ingredients
+# from apps.recipes.models import Ingredients
+from apps.login.models import User
 
 # TODO: Description Field to model, recipe.
 class Recipes(Model):
@@ -91,7 +92,7 @@ class Recipes(Model):
         null=True    
     )
     author = ForeignKey(
-        'login.User', 
+        User, 
         on_delete=CASCADE,
         related_name='author_User',
         blank=True,
@@ -102,7 +103,7 @@ class Recipes(Model):
         blank=True
     )
     likes = ManyToManyField(
-        'login.User',
+        User,
         blank=True,
         related_name='likes'
     )
@@ -111,7 +112,9 @@ class Recipes(Model):
         upload_to='images/'
         )
 
-
+    class Meta:
+        app_label = 'recipes'  
+        
     @property
     def total_likes(self):
         return self.likes.count() 

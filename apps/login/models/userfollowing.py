@@ -14,6 +14,8 @@ from django.db.models import (
     ManyToManyField
 )
 
+from apps.login.models.user import User
+
 class UserFollowing(Model):
     follower = ForeignKey(
         User, 

@@ -56,8 +56,10 @@ DEFAULT_APPS = [
     'lxml',
     'django_behave',
     'recipesite',
+    'apps.recipes',
     'apps.login',
     'apps.scrape',
+
 ]
 
 # Middlewares

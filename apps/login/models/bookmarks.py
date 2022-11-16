@@ -6,7 +6,7 @@ from django.db.models import (
     ForeignKey
 )
 from apps.login.models import User
-from recipesite.models import Recipes
+# from apps.recipes.models import Recipes
 
 class Bookmarks(Model):
     user = ForeignKey(
@@ -14,7 +14,7 @@ class Bookmarks(Model):
         on_delete=CASCADE
     )
     recipes = ForeignKey(
-        Recipes, 
+        'recipes.Recipes',
         on_delete=CASCADE,
         related_name='recipes'
     )

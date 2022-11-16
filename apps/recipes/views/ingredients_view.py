@@ -16,9 +16,9 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from ..models import *
-from ..forms import ingredientsform, recipesform
-# from recipesite.forms.recipesform import IngredientFormSet, RecipesForm
+from apps.recipes.models import *
+from apps.recipes.forms.ingredientsform import IngredientsForm
+from apps.recipes.forms.recipesform import RecipesForm, IngredientFormSet, StepFormSet
 
 class Index(ListView):
     """This is a docstring which describes the module"""
@@ -37,5 +37,5 @@ class Index(ListView):
 
 class IngredientsCreateView(CreateView):
     model = Ingredients
-    form_class = ingredientsform.IngredientsForm
+    form_class = IngredientsForm
     template_name = 'recipesite/ingredients_form.html'

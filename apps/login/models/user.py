@@ -2,7 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models import DateTimeField, ManyToManyField, CASCADE
-from recipesite.models import Recipes
+# from apps.recipes.models import Recipes
 
 
 class User(AbstractUser):
@@ -16,7 +16,7 @@ class User(AbstractUser):
         null=True
     )
     userbookmarks = ManyToManyField(
-        Recipes
+        'recipes.Recipes'
     )
 
 

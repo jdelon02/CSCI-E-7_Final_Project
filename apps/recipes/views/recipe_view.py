@@ -16,9 +16,10 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from ..models import *
-from ..forms.ingredientsform import IngredientsForm
-from ..forms.recipesform import RecipesForm, IngredientFormSet, StepFormSet
+from apps.recipes.models import *
+from apps.login.models.user import User
+from apps.recipes.forms.ingredientsform import IngredientsForm
+from apps.recipes.forms.recipesform import RecipesForm, IngredientFormSet, StepFormSet
 
 
 paginationnum = 10

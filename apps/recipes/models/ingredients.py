@@ -11,7 +11,7 @@ from django.db.models import (
     TextField,
     CharField
 )
- 
+from apps.recipes.models import Recipes
  
 class Ingredients(Model):
     UNITSTATUS = Choices(
@@ -35,7 +35,7 @@ class Ingredients(Model):
     )
     """Data model for user accounts."""
     recipe = ForeignKey(
-        'recipesite.Recipes',
+        Recipes,
         on_delete=CASCADE,
         related_name='recipe_Recipes',
         blank=True,
@@ -70,7 +70,7 @@ class Ingredients(Model):
     )
     
     class Meta:
-        app_label = 'recipesite.Ingredients'
+        app_label = 'recipes'
 
     def __str__(self):
         return self.name
