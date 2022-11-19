@@ -54,7 +54,7 @@ DEFAULT_APPS = [
     'django.contrib.staticfiles',
     'django_static_jquery',
     'lxml',
-    'django_behave',
+    'behave_django',
     'recipesite',
     'apps.recipes',
     'apps.login',
@@ -120,7 +120,7 @@ MANAGERS = ADMINS
 # ##### DJANGO RUNNING CONFIGURATION ######################
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-TEST_RUNNER = 'django_behave.runner.DjangoBehaveTestSuiteRunner'
+# TEST_RUNNER = 'behave_django.runner.DjangoBehaveTestSuiteRunner'
 
 # the default WSGI application
 WSGI_APPLICATION = '%s.wsgi.application' % SITE_NAME
