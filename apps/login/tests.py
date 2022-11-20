@@ -10,11 +10,16 @@ class LoginTesting(TestCase):
         self.user = User.objects.create(id='1', username='jdelon02', email='chefjeremy@delongaz.com')
 
     def test_user_model(self):
-        d = self.user
-        self.assertTrue(isinstance(d, User))
-        self.assertEqual(str(d.id), '1')
-        self.assertEqual(str(d.email), 'chefjeremy@delongaz.com')
-        self.assertEqual(str(d.username), 'jdelon02')
+        self.assertTrue(isinstance(self.user, User))
+
+    def test_user_id_model(self):
+        self.assertEqual(str(self.user.id), '1')
+
+    def test_user_email_model(self):
+        self.assertEqual(str(self.user.email), 'chefjeremy@delongaz.com')
+
+    def test_user_username_model(self):
+        self.assertEqual(str(self.user.username), 'jdelon02')
 
     class Meta:
         app_label = 'login'
