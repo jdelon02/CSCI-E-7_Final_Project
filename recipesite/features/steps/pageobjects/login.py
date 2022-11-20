@@ -1,5 +1,6 @@
 from recipesite.features.browser import Browser
 
+
 class LoginPage(Browser):
 
     LOGIN = '/login'
