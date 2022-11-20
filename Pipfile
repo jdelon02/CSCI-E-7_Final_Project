@@ -26,6 +26,7 @@ cloudscraper = "*"
 coverage = "*"
 behave-django = "*"
 flake8 = "*"
+behave = "*"
 
 [dev-packages]
 coverage = "*"
