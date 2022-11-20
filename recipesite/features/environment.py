@@ -1,23 +1,28 @@
 from selenium import webdriver
-# from selenium.webdriver.support.wait import WebDriverWait
-from django.core import management
+from selenium.webdriver.chrome.options import Options
 from behave import *
-from browser import Browser
-from steps.pageobjects.login import LoginPage
+import os
+import django
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'recipesite.settings')
+django.setup()
 
 
 def before_all(context):
-    context.browser = Browser()
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("--headless")
+    context.selenium = webdriver.Remote(
+        'http://192.168.86.12:4444/wd/hub',
+        options=chrome_options,
+    )
     context.base_url = "http://127.0.0.1:8000"
-    context.signin = LoginPage()
+    # context.test.assertEquals(context.selenium.title, "Site administration | Django site admin")
 
 
-def before_scenario(context, scenario):
-    pass
+# def visit(context, location=''):
+#     context.selenium.get(context.base_url + location)
 
 
-def after_all(context):
-    # Quit our browser once we're done!
-    context.signin.log_out()
-    context.browser.close()
-    context.browser = None
+# def after_all(context):
+#     # Quit our browser once we're done!
+#     context.selenium.close()
