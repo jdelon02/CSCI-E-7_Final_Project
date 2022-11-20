@@ -19,7 +19,7 @@ USE_I18N = True
 USE_L10N = True
 
 # enable timezone awareness by default
-USE_TZ = True
+USE_TZ = False
 
 # This list of languages will be provided
 LANGUAGES = (

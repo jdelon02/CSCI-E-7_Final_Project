@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import User
+from apps.login.models import User
 
 # Create your tests here.
 class LoginTesting(TestCase):
@@ -11,6 +11,9 @@ class LoginTesting(TestCase):
         d = self.user
         self.assertTrue(isinstance(d, User))
         self.assertEqual(str(d.id), '1')
+        
+    class Meta:
+        app_label = 'login'   
     
     
     
