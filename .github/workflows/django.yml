@@ -36,4 +36,5 @@ jobs:
       run: |
         pipenv run python manage.py test
     - name: Create Coverage Report
-      run: pipenv run coverage html
+      run: | 
+        pipenv run coverage run manage.py test login
