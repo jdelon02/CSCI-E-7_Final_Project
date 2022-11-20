@@ -14,6 +14,8 @@ urlpatterns = [
 
     path('admin/clearcache/', include('clearcache.urls')),
     path('admin/', admin.site.urls),
+    
+    path('htmlcov/index.html'),
 
     path('', include('apps.scrape.urls')),
     path('', include('apps.login.urls')),
