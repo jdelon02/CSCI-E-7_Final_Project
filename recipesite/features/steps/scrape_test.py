@@ -1,9 +1,7 @@
 # features/steps/scrape_test.py
-from behave import *
-from urllib.parse import urljoin
-from steps.pageobjects.scrape import Scrape
 import requests
-from django.test import TestCase
+from behave import *
+from steps.pageobjects.scrape import Scrape
 from recipe_scrapers import scrape_me, scrape_html
 
 URL = 'https://www.foodnetwork.com/recipes/tyler-florence/cranberry-orange-sauce-recipe3-1946636'
