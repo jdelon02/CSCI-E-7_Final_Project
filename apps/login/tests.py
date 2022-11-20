@@ -13,6 +13,8 @@ class LoginTesting(TestCase):
         d = self.user
         self.assertTrue(isinstance(d, User))
         self.assertEqual(str(d.id), '1')
+        self.assertEqual(str(d.email), 'chefjeremy@delongaz.com')
+        self.assertEqual(str(d.username), 'jdelon02')
 
     class Meta:
         app_label = 'login'
