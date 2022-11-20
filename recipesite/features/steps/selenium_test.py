@@ -8,7 +8,8 @@ import requests
 def send_request_page(context, method, page):
     url = urljoin(context.base_url, page)
     context.response = requests.get(url)
-    
+
+
 @then('I expect the response text contains "{text}"')
 def check_response_text_contains(context, text):
     assert text in context.response.text

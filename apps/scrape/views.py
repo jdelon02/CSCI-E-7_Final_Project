@@ -24,7 +24,7 @@ def Index(request):
     (so far) food52.com, you get blocked."""
     if request.method == "POST":
         data = []
-        
+
         # Just a quick check
         url = request.POST["url"]
         if url:
@@ -40,12 +40,9 @@ def Index(request):
                 print(recipe.instructions())
                 print(attributes)
 
-
-
         # https://food52.com/recipes/88304-buttermilk-marinated-roast-chicken-from-samin-nosrat
         # http://feeds.feedburner.com/food52-TheAandMBlog
-        
-        return render(request, "recipesite/scrape_review.html", {'data':data})
+
+        return render(request, "recipesite/scrape_review.html", {'data': data})
     else:
         return render(request, "recipesite/scrapetemplate.html")
-    

@@ -8,7 +8,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import include, path
 from django.contrib import admin
-from django.contrib.auth import views # as auth_views
+from django.contrib.auth import views  # as auth_views
 
 from apps.login.views import user_view
 from apps.login.views.user_view import UserDetailView
@@ -21,5 +21,5 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-        urlpatterns += static(settings.MEDIA_URL,
-                              document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

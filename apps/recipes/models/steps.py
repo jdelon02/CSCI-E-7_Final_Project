@@ -13,10 +13,12 @@ from django.db.models import (
 from apps.recipes.models import Recipes
 
 # TODO: Description Field to model, recipe.
+
+
 class Steps(Model):
 
     step = CharField(
-        max_length = 240
+        max_length=240
     )
     recipe = ForeignKey(
         Recipes,
@@ -27,8 +29,8 @@ class Steps(Model):
     )
 
     class Meta:
-        app_label = 'recipes'  
-        
+        app_label = 'recipes'
+
     def __str__(self):
         return self.step
-        # return str(self.name)    
+        # return str(self.name)

@@ -19,12 +19,11 @@ class User(AbstractUser):
         'recipes.Recipes'
     )
 
-
     class Meta:
-        app_label = 'login'    
-    
+        app_label = 'login'
+
     def __str__(self):
-        #return self.name
+        # return self.name
         return str(self.id)
 
     def serialize(self):

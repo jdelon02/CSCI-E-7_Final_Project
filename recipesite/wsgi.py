@@ -1,3 +1,5 @@
+import os
+from django.core.wsgi import get_wsgi_application
 """
 WSGI config for recipesite project.
 
@@ -7,8 +9,5 @@ For more information on this file, see
 https://docs.djangoproject.com/en/1.8/howto/deployment/wsgi/
 """
 
-import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.production")
-
-from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()

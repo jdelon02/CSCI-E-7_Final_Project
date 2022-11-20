@@ -22,13 +22,15 @@ from django.db.models import (
 from apps.login.models import User
 
 # TODO: Description Field to model, recipe.
+
+
 class Recipes(Model):
-    
+
     class Media(object):
         js = formset_media_js + (
             # Other form media here
         )
-    
+
     SERVING = Choices(
         (None, 'Your String For Display'),
         ('2', _('2')),
@@ -50,22 +52,22 @@ class Recipes(Model):
     )
 
     name = CharField(
-        max_length = 80
+        max_length=80
     )
     description = CharField(
-        max_length = 240
+        max_length=240
     )
     servingQuantity = CharField(
-        max_length = 15,
+        max_length=15,
         choices=SERVING,
         blank=True,
-        null=True    
+        null=True
     )
     skillLevel = CharField(
-        max_length = 10,
+        max_length=10,
         choices=DIFFS,
         blank=True,
-        null=True    
+        null=True
     )
     prepHour = IntegerField(
         default=0,
@@ -77,7 +79,7 @@ class Recipes(Model):
         max_length=7,
         choices=MINSTATUS,
         blank=True,
-        null=True    
+        null=True
     )
     cookHour = IntegerField(
         default=0,
@@ -89,10 +91,10 @@ class Recipes(Model):
         max_length=7,
         choices=MINSTATUS,
         blank=True,
-        null=True    
+        null=True
     )
     author = ForeignKey(
-        User, 
+        User,
         on_delete=CASCADE,
         related_name='author_User',
         blank=True,
@@ -110,15 +112,15 @@ class Recipes(Model):
     recipe_img = ImageField(
         default='post.jpeg',
         upload_to='images/'
-        )
+    )
 
     class Meta:
-        app_label = 'recipes'  
-        
+        app_label = 'recipes'
+
     @property
     def total_likes(self):
-        return self.likes.count() 
-    
+        return self.likes.count()
+
     def serialize(self):
         return {
             "id": self.id,
@@ -129,10 +131,10 @@ class Recipes(Model):
             "timestamp": self.timestamp.strftime("%b %d %Y, %I:%M %p"),
             "likes": self.likes.count()
         }
-        
+
     def __str__(self):
         return self.name
         # return str(self.id)
-    
+
     def get_absolute_url(self):
-        return reverse('recipedetail', kwargs={'pk': self.pk})        
+        return reverse('recipedetail', kwargs={'pk': self.pk})

@@ -12,7 +12,8 @@ from django.db.models import (
     CharField
 )
 from apps.recipes.models import Recipes
- 
+
+
 class Ingredients(Model):
     UNITSTATUS = Choices(
         ('cup', ('Cup')),
@@ -47,14 +48,14 @@ class Ingredients(Model):
         null=True
     )
     quantityfraction = CharField(
-        max_length = 8,
+        max_length=8,
         choices=QUANTS,
         blank=True,
-        null=True        
+        null=True
     )
     unitId = CharField(
-        max_length = 10,
-        choices=UNITSTATUS        
+        max_length=10,
+        choices=UNITSTATUS
     )
     name = CharField(
         max_length=75
@@ -68,7 +69,7 @@ class Ingredients(Model):
         blank=True,
         null=True
     )
-    
+
     class Meta:
         app_label = 'recipes'
 

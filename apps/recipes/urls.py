@@ -8,7 +8,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import include, path
 from django.contrib import admin
-from django.contrib.auth import views # as auth_views
+from django.contrib.auth import views  # as auth_views
 
 from apps.recipes.views import recipe_view, ingredients_view
 from apps.recipes.views.recipe_view import RecipeCreateView, RecipeUpdateView, BookmarkListView, RecipeDetailView
@@ -22,12 +22,12 @@ urlpatterns = [
     path('recipe/<int:pk>/edit', recipe_view.RecipeUpdateView.as_view(), name='recipeupdate'),
     path('recipe/', recipe_view.Index.as_view(), name='recipesearch'),
     path("bookmarks", recipe_view.BookmarkListView.as_view(), name="bookmarks"),
-    
+
     # API Routes
-    path("api/recipe/<int:recipe_id>",recipe_view.RecipeDetailView.like_button, name='like'),
-    path("api/bookmark/<int:recipe_id>",recipe_view.BookmarkListView.save_button, name='save'),
+    path("api/recipe/<int:recipe_id>", recipe_view.RecipeDetailView.like_button, name='like'),
+    path("api/bookmark/<int:recipe_id>", recipe_view.BookmarkListView.save_button, name='save'),
 ]
 
 if settings.DEBUG:
-        urlpatterns += static(settings.MEDIA_URL,
-                              document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

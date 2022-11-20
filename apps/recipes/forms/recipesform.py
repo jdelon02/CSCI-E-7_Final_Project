@@ -20,7 +20,7 @@ class RecipesForm(ModelForm):
         ('2/3', _('2/3')),
         ('3/4', _('3/4')),
     )
-    
+
     class Meta:
         """This is a docstring which describes the module"""
         model = Recipes
@@ -34,16 +34,16 @@ class RecipesForm(ModelForm):
             'skillLevel',
             'servingQuantity',
             'recipe_img'
-            
+
         ]
-    
+
     def __str__(self):
         return self.name
-    
+
     @property
     def total_likes(self):
-        return self.likes.count() 
-    
+        return self.likes.count()
+
     def serialize(self):
         return {
             "id": self.id,
@@ -54,10 +54,10 @@ class RecipesForm(ModelForm):
             "timestamp": self.timestamp.strftime("%b %d %Y, %I:%M %p"),
             "likes": self.likes.count()
         }
-        
+
     def __init__(self, *args, **kwargs):
         super(RecipesForm, self).__init__(*args, **kwargs)
-        
+
         DIFFS = Choices(
             (None, 'Skill Level'),
             ('easy', _('Easy')),
@@ -74,7 +74,7 @@ class RecipesForm(ModelForm):
         )
         HOURSTATUS = Choices(
             (None, 'Hours'),
-            ('1', _('1')),           
+            ('1', _('1')),
             ('2', _('2')),
             ('3', _('3')),
             ('4', _('4')),
@@ -95,52 +95,54 @@ class RecipesForm(ModelForm):
             ('45', _('45')),
         )
         self.fields['skillLevel'] = ChoiceField(
-                                choices=DIFFS, 
-                                label="Skill Level",
-                                required=False,
-                                initial="Difficulty"
-                                
-                        )
+            choices=DIFFS,
+            label="Skill Level",
+            required=False,
+            initial="Difficulty"
+
+        )
         self.fields['servingQuantity'] = ChoiceField(
-                                choices=SERVING, 
-                                label="Servings / Quantity",
-                                required=False
-                        )
+            choices=SERVING,
+            label="Servings / Quantity",
+            required=False
+        )
         self.fields['prepHour'] = ChoiceField(
-                                choices=HOURSTATUS, 
-                                label="Hours",
-                                required=False
-                        )
+            choices=HOURSTATUS,
+            label="Hours",
+            required=False
+        )
         self.fields['prepMin'] = ChoiceField(
-                                choices=MINSTATUS, 
-                                label="Minutes",
-                                required=False
-                        )
+            choices=MINSTATUS,
+            label="Minutes",
+            required=False
+        )
         self.fields['cookHour'] = ChoiceField(
-                                choices=HOURSTATUS, 
-                                label="Hours",
-                                required=False
-                        )
+            choices=HOURSTATUS,
+            label="Hours",
+            required=False
+        )
         self.fields['cookMin'] = ChoiceField(
-                                choices=MINSTATUS, 
-                                label="Minutes",
-                                required=False
-                        )
+            choices=MINSTATUS,
+            label="Minutes",
+            required=False
+        )
         self.fields['description'] = CharField(
-                                widget=Textarea,
-                                label="Description*"
-                        )
+            widget=Textarea,
+            label="Description*"
+        )
         self.fields['name'] = CharField(
-                                label="Name*"
-                        )
-        
+            label="Name*"
+        )
+
+
 IngredientFormSet = inlineformset_factory(
-    Recipes, 
+    Recipes,
     Ingredients,
     form=IngredientsForm,
     extra=1,
     can_delete=True
 )
+
 
 def ingredientset_view(request):
     formset = IngredientFormSet(request.POST or None)
@@ -151,13 +153,15 @@ def ingredientset_view(request):
     # return render(request, 'formset.html', {'formset': formset})
     return render(request, reverse_lazy('recipeupdate'), {'formset': formset})
 
+
 StepFormSet = inlineformset_factory(
-    Recipes, 
+    Recipes,
     Steps,
     form=StepForm,
     extra=1,
     can_delete=True
 )
+
 
 def stepformset_view(request):
     formset = StepFormSet(request.POST or None)

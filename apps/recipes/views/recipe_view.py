@@ -31,15 +31,15 @@ class Index(ListView):
     context_object_name = 'recipes_listview'
     template_name = 'recipesite/index.html'
     paginate_by = paginationnum
-    
+
     def get_context_data(self, *args, **kwargs):
         context = super(Index,
                         self).get_context_data(*args, **kwargs)
         current_user = self.request.user.id
         context['currentUser'] = current_user
-        
+
         return context
-    
+
     def get_queryset(self):
         query = self.request.GET.get('search')
         if query:
@@ -55,7 +55,7 @@ class BookmarkListView(UserPassesTestMixin, ListView):
     context_object_name = 'recipes_listview'
     template_name = 'recipesite/index.html'
     paginate_by = paginationnum
-    
+
     def test_func(self):
         test = self.request.user.id
         if test:
@@ -68,9 +68,9 @@ class BookmarkListView(UserPassesTestMixin, ListView):
                         self).get_context_data(*args, **kwargs)
         current_user = self.request.user.id
         context['currentUser'] = current_user
-        context['bookmarks'] = True  
+        context['bookmarks'] = True
         return context
-    
+
     def get_queryset(self):
         current_user = self.request.user.id
         bookies = User.objects.filter(pk=current_user).values_list('userbookmarks', flat=True)
@@ -79,7 +79,7 @@ class BookmarkListView(UserPassesTestMixin, ListView):
 
     def save_button(request, recipe_id):
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
-        
+
         if is_ajax:
             if request.method == "PUT":
                 data = json.loads(request.body)
@@ -92,35 +92,34 @@ class BookmarkListView(UserPassesTestMixin, ListView):
                     userLoad.userbookmarks.remove(Recipes.objects.get(pk=recipe_id))
                     userLoad.save()
                     print(userLoad)
-                    saved="Bookmark This"
+                    saved = "Bookmark This"
                 else:
                     userLoad.userbookmarks.add(Recipes.objects.get(pk=recipe_id))
                     userLoad.save()
                     print(userLoad)
-                    saved="Saved to Bookmarks"
-                return JsonResponse({'saved':saved})
+                    saved = "Saved to Bookmarks"
+                return JsonResponse({'saved': saved})
             else:
                 return HttpResponse('CSRF token is being exempted here!')
-            
 
 
 class RecipeDetailView(DetailView):
     model = Recipes
-    
+
     def get_context_data(self, *args, **kwargs):
         context = super(RecipeDetailView,
                         self).get_context_data(*args, **kwargs)
         current_user = self.request.user.id
-        context['currentUser'] = current_user  
+        context['currentUser'] = current_user
         current_recipe = self.kwargs['pk']
-        ingredientlist = Ingredients.objects.filter(recipe=current_recipe) 
+        ingredientlist = Ingredients.objects.filter(recipe=current_recipe)
         ingredientlist = ingredientlist.all().order_by('id')
         context['ingredientlist'] = ingredientlist
         print(ingredientlist)
-        steplist = Steps.objects.filter(recipe=current_recipe) 
+        steplist = Steps.objects.filter(recipe=current_recipe)
         steplist = steplist.all().order_by('id')
         context['steplist'] = steplist
-                
+
         userLoad = User.objects.get(pk=current_user)
         usercheck = userLoad.userbookmarks.all()
         print(usercheck)
@@ -131,38 +130,38 @@ class RecipeDetailView(DetailView):
             context['bookmark'] = "Bookmark Saved"
         print(context['bookmark'])
         return context
-    
+
     def like_button(request, recipe_id):
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
-        
+
         if is_ajax:
             if request.method == "PUT":
                 data = json.loads(request.body)
                 userdata = User.objects.get(pk=data['user'])
                 postdata = data['id']
-                postcheck=get_object_or_404(Recipes,pk=postdata)
+                postcheck = get_object_or_404(Recipes, pk=postdata)
                 if postcheck.likes.filter(id=userdata.id):
-                    postcheck.likes.remove(userdata) #remove user from likes 
-                    liked=False
+                    postcheck.likes.remove(userdata)  # remove user from likes
+                    liked = False
                 else:
                     postcheck.likes.add(userdata)
-                    liked=True
-                return JsonResponse({'likes':postcheck.total_likes, "likeclass":liked})
+                    liked = True
+                return JsonResponse({'likes': postcheck.total_likes, "likeclass": liked})
             else:
                 return HttpResponse('CSRF token is being exempted here!')
-            
+
     def getRecipe(request, recipe_id):
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
-        
+
         if is_ajax:
             if request.method == "GET":
                 print(recipe_id)
-                postcheck=Recipes.objects.get(pk=recipe_id)
+                postcheck = Recipes.objects.get(pk=recipe_id)
                 userid = postcheck.user_id.id
                 # print(userid)
                 if postcheck:
                     jsonreply = postcheck.serialize()
-                    return JsonResponse({"jsonreply":jsonreply, "id":userid})
+                    return JsonResponse({"jsonreply": jsonreply, "id": userid})
                 else:
                     pass
             elif request.method == "PUT":
@@ -170,14 +169,14 @@ class RecipeDetailView(DetailView):
                 print(data)
                 # postdata = User.objects.get(username=data['user'])
                 # postdata = data['id']
-                postcheck=get_object_or_404(Recipes,pk=recipe_id)
+                postcheck = get_object_or_404(Recipes, pk=recipe_id)
                 if postcheck:
                     postcheck.body = data
                     postcheck.save()
                     return JsonResponse(postcheck.serialize())
             else:
                 return HttpResponse('CSRF token is being exempted here!')
-    
+
     # def get_queryset(self):
     #     current_user = self.request.user.id
     #     ingredients = UserFollowing.objects.filter(follower_id=current_user).values_list('following', flat=True)
@@ -189,14 +188,14 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
     model = Recipes
     form_class = RecipesForm
     template_name = 'recipesite/recipes_edit.html'
-    
+
     def test_func(self):
         test = self.request.user.id
         if test:
             return True
         else:
             return False
-    
+
     def get(self, request, *args, **kwargs):
         self.object = None
         form_class = self.get_form_class()
@@ -204,31 +203,31 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
         ingredientformset = IngredientFormSet()
         stepformset = StepFormSet()
         return self.render_to_response(
-                self.get_context_data(form=form,
-                        ingredientformset=ingredientformset,
-                        stepformset=stepformset
-                                )
-                        )
+            self.get_context_data(form=form,
+                                  ingredientformset=ingredientformset,
+                                  stepformset=stepformset
+                                  )
+        )
 
     def post(self, request, *args, **kwargs):
         self.object = None
         form_class = self.get_form_class()
         form = self.get_form(form_class)
         ingredientformset = IngredientFormSet(data=self.request.POST,
-                                                             instance=self.object)
+                                              instance=self.object)
         stepformset = StepFormSet(data=self.request.POST,
-                                                             instance=self.object)
+                                  instance=self.object)
         if form.is_valid() and ingredientformset.is_valid() and stepformset.is_valid():
             return self.form_valid(form, ingredientformset, stepformset)
         else:
             return self.form_invalid(form, ingredientformset, stepformset)
-        
+
         # self.object = self.get_object()
         # form = RecipesForm(data=self.request.POST, instance=self.object)
         # ingredientformset = IngredientFormSet(data=self.request.POST,
-        #                                                      instance=self.object)
+        #      instance=self.object)
         # stepformset = StepFormSet(data=self.request.POST,
-        #                                                      instance=self.object)
+        #      instance=self.object)
         # if form.is_valid() and ingredientformset.is_valid() and stepformset.is_valid():
         #     return self.form_valid(form, ingredientformset, stepformset)
         # else:
@@ -238,32 +237,32 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
         print(form.instance)
         recipe = form.save(commit=False)
         recipe.author = self.request.user
-        
+
         if form.data['servingQuantity'] == '':
             recipe.servingQuantity = None
-            
+
         if form.data['skillLevel'] == '':
             recipe.skillLevel = None
-            
+
         if form.data['prepHour'] == '':
             recipe.prepHour = None
-            
+
         if form.data['prepMin'] == '':
             recipe.prepMin = None
-            
+
         if form.data['cookHour'] == '':
             recipe.cookHour = None
-            
+
         if form.data['cookMin'] == '':
             recipe.cookMin = None
-            
+
         if 'recipe_img' in form.files:
             recipe.recipe_img = form.files['recipe_img']
 
-        print(recipe)  
-        
+        print(recipe)
+
         recipe.save()
-        
+
         ingredientlist = ingredientformset.save(commit=False)
         for ingr in ingredientlist:
             print(ingr)
@@ -279,24 +278,23 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
                 new_ingr.quantitywhole = ingr.instance.quantitywhole
                 new_ingr.unitId = ingr.instance.unitId
                 new_ingr.save()
-                
+
         steplist = stepformset.save(commit=False)
         for step in steplist:
             step.recipe = recipe
             step.step = step.step
             step.save()
-            
+
         return HttpResponseRedirect(
-                reverse_lazy('bookmarks'))
-        
+            reverse_lazy('bookmarks'))
+
     def form_invalid(self, form, ingredientformset, stepformset):
         return self.render_to_response(
-                    self.get_context_data(form=form,
-                        ingredientformset=ingredientformset,
-                        stepformset=stepformset
-                                )
-                        )
-
+            self.get_context_data(form=form,
+                                  ingredientformset=ingredientformset,
+                                  stepformset=stepformset
+                                  )
+        )
 
 
 class RecipeUpdateView(UpdateView):
@@ -304,12 +302,12 @@ class RecipeUpdateView(UpdateView):
     # fields = '__all__'
     form_class = RecipesForm
     formset_class = {
-        'ingredientformset' : IngredientFormSet,
-        'stepformset' : StepFormSet
+        'ingredientformset': IngredientFormSet,
+        'stepformset': StepFormSet
     }
     template_name = 'edit.html'
     template_name = 'recipesite/recipes_edit.html'
-    
+
     def test_func(self):
         test = self.request.user.id
         if test:
@@ -327,7 +325,7 @@ class RecipeUpdateView(UpdateView):
     #         context['ingredientformset'] = IngredientFormSet(instance=self.object)
     #         context['stepformset'] = StepFormSet(instance=self.object)
     #     return context
-    
+
     def get_object(self, queryset=None):
         self.object = super(RecipeUpdateView, self).get_object()
         return self.object
@@ -341,20 +339,19 @@ class RecipeUpdateView(UpdateView):
         ingredientformset = IngredientFormSet(instance=self.object)
         stepformset = StepFormSet(instance=self.object)
         return self.render_to_response(
-                  self.get_context_data(form=RecipesForm(instance=self.object),
-                                        ingredientformset=ingredientformset,
-                                        stepformset=stepformset
-                                        )
-                                     )
-    
-            
+            self.get_context_data(form=RecipesForm(instance=self.object),
+                                  ingredientformset=ingredientformset,
+                                  stepformset=stepformset
+                                  )
+        )
+
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = RecipesForm(data=self.request.POST, instance=self.object)
         ingredientformset = IngredientFormSet(data=self.request.POST,
-                                                             instance=self.object)
+                                              instance=self.object)
         stepformset = StepFormSet(data=self.request.POST,
-                                                             instance=self.object)
+                                  instance=self.object)
         if form.is_valid() and ingredientformset.is_valid() and stepformset.is_valid():
             return self.form_valid(form, ingredientformset, stepformset)
         else:
@@ -367,39 +364,39 @@ class RecipeUpdateView(UpdateView):
             recipe.servingQuantity = None
         else:
             recipe.servingQuantity = form.data['servingQuantity']
-            
+
         if form.data['skillLevel'] == '':
             recipe.skillLevel = None
         else:
-            recipe.skillLevel = form.data['skillLevel']          
-            
+            recipe.skillLevel = form.data['skillLevel']
+
         if form.data['prepHour'] == '':
             recipe.prepHour = None
         else:
             recipe.prepHour = form.data['prepHour']
-            
+
         if form.data['prepMin'] == '':
             recipe.prepMin = None
         else:
             recipe.prepMin = form.data['prepMin']
-            
+
         if form.data['cookHour'] == '':
             recipe.cookHour = None
-        else: 
-            recipe.cookHour = form.data['cookHour']  
-            
+        else:
+            recipe.cookHour = form.data['cookHour']
+
         if form.data['cookMin'] == '':
             recipe.cookMin = None
         else:
             recipe.cookMin = form.data['cookMin']
-        
+
         if 'recipe_img' in form.files:
             recipe.recipe_img = form.files['recipe_img']
 
-        print(recipe)  
-              
+        print(recipe)
+
         recipe.save()
-        
+
         ingredients = ingredientformset
         # ingredients.save(commit=False)
         print(ingredients)
@@ -417,20 +414,20 @@ class RecipeUpdateView(UpdateView):
                 new_ingr.quantitywhole = ingr.instance.quantitywhole
                 new_ingr.unitId = ingr.instance.unitId
                 new_ingr.save()
-    
+
         steplist = stepformset
         for step in steplist:
             step.recipe = recipe
             step.step = step.instance.step
             step.save()
-            
+
         return HttpResponseRedirect(
-                reverse_lazy('recipedetail', kwargs={'pk': recipe.id}))
+            reverse_lazy('recipedetail', kwargs={'pk': recipe.id}))
 
     def form_invalid(self, form, ingredientformset, stepformset):
         return self.render_to_response(
-                    self.get_context_data(form=form,
-                        ingredientformset=ingredientformset,
-                        stepformset=stepformset
-                                )
-                        )
+            self.get_context_data(form=form,
+                                  ingredientformset=ingredientformset,
+                                  stepformset=stepformset
+                                  )
+        )

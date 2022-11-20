@@ -8,9 +8,10 @@ from django.db.models import (
 from apps.login.models import User
 # from apps.recipes.models import Recipes
 
+
 class Bookmarks(Model):
     user = ForeignKey(
-        User, 
+        User,
         on_delete=CASCADE
     )
     recipes = ForeignKey(
@@ -20,7 +21,7 @@ class Bookmarks(Model):
     )
 
     class Meta:
-        app_label = 'login' 
-        
+        app_label = 'login'
+
     def __str__(self):
         return str(self.id)

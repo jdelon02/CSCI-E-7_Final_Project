@@ -6,7 +6,7 @@ from apps.login.models import User
 
 class UserPostForm(ModelForm):
     """This is a docstring which describes the module"""
-    
+
     class Meta:
         """This is a docstring which describes the module"""
         model = User

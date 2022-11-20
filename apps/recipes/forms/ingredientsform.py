@@ -1,18 +1,16 @@
 """This is a docstring which describes the module"""
 from django import forms
-from django.forms import ModelForm
+from django.forms import ModelForm, inlineformset_factory, CharField, ChoiceField, Select
 from django.utils.translation import gettext_lazy as _
 from model_utils import Choices
-from django.forms import ModelForm, inlineformset_factory, CharField, ChoiceField, Select
 from apps.recipes.models import Ingredients
-
 
 
 class IngredientsForm(ModelForm):
     """This is a docstring which describes the module"""
     # name = CharField(
     # )
-    
+
     class Meta:
         """This is a docstring which describes the module"""
         model = Ingredients
@@ -23,7 +21,7 @@ class IngredientsForm(ModelForm):
             'name',
             'description',
         ]
-        
+
     # def __str__(self):
     #     return self.name
 
@@ -69,15 +67,15 @@ class IngredientsForm(ModelForm):
             choices=WHOLE,
             label="Quantity",
             required=False
-            )
+        )
         self.fields['quantityfraction'] = ChoiceField(
             choices=QUANTS,
             label="Partial",
             initial="Select",
             required=False
-            )
+        )
         self.fields['unitId'] = ChoiceField(
             choices=UNITSTATUS,
             label="Measurement",
             required=False
-            )
+        )
