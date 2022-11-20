@@ -29,10 +29,10 @@ jobs:
         pip install pipenv
 
     - id: cache-pipenv
-        uses: actions/cache@v1
-        with:
-          path: ~/.local/share/virtualenvs/
-          key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+      uses: actions/cache@v1
+      with:
+        path: ~/.local/share/virtualenvs/
+        key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
 
     - name: Install dependencies
       if: steps.cache-pipenv.outputs.cache-hit != 'true'
@@ -47,7 +47,7 @@ jobs:
     - name: Run Tests
       run: |
         pipenv run python manage.py test
-        
+
     - name: Create Coverage Report
       run: | 
         pipenv run coverage run manage.py test login
