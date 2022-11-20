@@ -6,6 +6,7 @@ from apps.login.models import User
 # Create your tests here.
 import mock
 
+
 class RecipeTesting(TestCase):
 
     def setUp(self):
@@ -71,7 +72,6 @@ class RecipeTesting(TestCase):
         self.assertEqual(str(testrecipe.prepMin), str(self.recipe.prepMin))
         testrecipe.skillLevel = self.recipe.skillLevel
         self.assertEqual(str(testrecipe.skillLevel), str(self.recipe.skillLevel))
-         
 
     class Meta:
         app_label = 'recipes'
