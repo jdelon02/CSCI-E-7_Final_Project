@@ -28,6 +28,7 @@ behave-django = "*"
 flake8 = "*"
 behave = "*"
 mock = "*"
+selenium-page-factory = "*"
 
 [dev-packages]
 coverage = "*"

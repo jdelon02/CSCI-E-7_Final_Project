@@ -5,7 +5,6 @@ Feature: Using selenium remote
 
   Scenario: Load homepage
     # use a behave-webdriver step
-    Given I send a Get request to the page "recipe"
     # use your own steps using selenium-requests features
     Given I send a GET request to the page "recipe"
     Then I expect the response text contains "Recipe Keeper"

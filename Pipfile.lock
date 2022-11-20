@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "29fc7a3f0f702c170198d4ce8dad8efbd3a306d75fe12bce0522b502d3fd946b"
+            "sha256": "83fdfe3562cfdb8cd7a9bbccc2db52edf83f09a6fef800c4ce0c2640391ee7ce"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -645,6 +645,13 @@
             ],
             "markers": "python_version ~= '3.7'",
             "version": "==4.6.0"
+        },
+        "selenium-page-factory": {
+            "hashes": [
+                "sha256:c2bd216059be0b5f9dab1696a1a66040c27363e73864204112d24dd5fcd9e29d"
+            ],
+            "index": "pypi",
+            "version": "==2.5"
         },
         "setuptools": {
             "hashes": [
