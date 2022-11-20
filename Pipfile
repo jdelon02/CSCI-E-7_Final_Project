@@ -27,6 +27,7 @@ coverage = "*"
 behave-django = "*"
 flake8 = "*"
 behave = "*"
+mock = "*"
 
 [dev-packages]
 coverage = "*"

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "5ee414a2eb91561ae527630c638428e97337a686a605adfab46785fba9fcf7d3"
+            "sha256": "29fc7a3f0f702c170198d4ce8dad8efbd3a306d75fe12bce0522b502d3fd946b"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -431,6 +431,14 @@
                 "sha256:84f1f8f2ff3f1deb1c30be497e7ccd805452996a662fd4a77f09e0105bede2c9"
             ],
             "version": "==1.1.2"
+        },
+        "mock": {
+            "hashes": [
+                "sha256:122fcb64ee37cfad5b3f48d7a7d51875d7031aaf3d8be7c42e2bee25044eee62",
+                "sha256:7d3fbbde18228f4ff2f1f119a45cdffa458b4c0dee32eb4d2bb2f82554bac7bc"
+            ],
+            "index": "pypi",
+            "version": "==4.0.3"
         },
         "openeats-recipe-scraper": {
             "hashes": [
