@@ -13,14 +13,14 @@
         {% bootstrap_javascript %}
         {# Display django.contrib.messages as Bootstrap alerts #}
         {% bootstrap_messages %}
-        <link href="{% static 'recipesite/styles.css' %}" rel="stylesheet">
+        <link href="{% static 'recipes/styles.css' %}" rel="stylesheet">
         <meta name="description" content="Structure your Flask apps in a scalable and intelligent way using Blueprints."/>
         <meta name="HandheldFriendly" content="True"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
         <meta name="description" content="" />
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
-        <script src="{% static 'static_jquery/js/jquery.js' %}"></script>
-        <script src="{% static 'recipesite/js/jquery.formset.js' %}"></script> 
+        <script src="{% static 'recipes/js/jquery.js' %}"></script>
+        <script src="{% static 'recipes/js/jquery.formset.js' %}"></script> 
     </head>
     <body>
 
@@ -86,7 +86,7 @@
         </div>
 
         {% block script %}
-        <script src="{% static 'recipesite/index.js' %}" defer></script>
+        <script src="{% static 'recipes/index.js' %}" defer></script>
         {% endblock %}
     </body>
 </html>

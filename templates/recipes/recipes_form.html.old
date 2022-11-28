@@ -1,4 +1,4 @@
-{% extends "recipesite/layout.html" %}
+{% extends "layout.html" %}
 {# Load the tag library #}
 {% load bootstrap5 %}
 

@@ -29,7 +29,7 @@ class Index(ListView):
     """This is a docstring which describes the module"""
     model = Recipe
     context_object_name = 'recipes_listview'
-    template_name = 'recipesite/index.html'
+    template_name = 'recipes/index.html'
     paginate_by = paginationnum
 
     def get_context_data(self, *args, **kwargs):
@@ -53,7 +53,7 @@ class Index(ListView):
 class BookmarkListView(UserPassesTestMixin, ListView):
     model = Recipe
     context_object_name = 'recipes_listview'
-    template_name = 'recipesite/index.html'
+    template_name = 'recipes/index.html'
     paginate_by = paginationnum
 
     def test_func(self):
@@ -187,7 +187,7 @@ class RecipeDetailView(DetailView):
 class RecipeCreateView(LoginRequiredMixin, CreateView):
     model = Recipe
     form_class = RecipeForm
-    template_name = 'recipesite/recipes_edit.html'
+    template_name = 'recipes/recipe_edit.html'
 
     def test_func(self):
         test = self.request.user.id
@@ -270,7 +270,7 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
                 ingr.recipe = recipe
                 ingr.save()
             else:
-                new_ingr = Ingredients()
+                new_ingr = Ingredient()
                 new_ingr.recipe = recipe
                 new_ingr.name = ingr.instance.name
                 new_ingr.description = ingr.instance.description
@@ -306,7 +306,7 @@ class RecipeUpdateView(UpdateView):
         'stepformset': StepFormSet
     }
     template_name = 'edit.html'
-    template_name = 'recipesite/recipes_edit.html'
+    template_name = 'recipes/recipes_edit.html'
 
     def test_func(self):
         test = self.request.user.id
@@ -339,7 +339,7 @@ class RecipeUpdateView(UpdateView):
         ingredientformset = IngredientFormSet(instance=self.object)
         stepformset = StepFormSet(instance=self.object)
         return self.render_to_response(
-            self.get_context_data(form=RecipesForm(instance=self.object),
+            self.get_context_data(form=RecipeForm(instance=self.object),
                                   ingredientformset=ingredientformset,
                                   stepformset=stepformset
                                   )
@@ -347,7 +347,7 @@ class RecipeUpdateView(UpdateView):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        form = RecipesForm(data=self.request.POST, instance=self.object)
+        form = RecipeForm(data=self.request.POST, instance=self.object)
         ingredientformset = IngredientFormSet(data=self.request.POST,
                                               instance=self.object)
         stepformset = StepFormSet(data=self.request.POST,
@@ -406,7 +406,7 @@ class RecipeUpdateView(UpdateView):
                 ingr.recipe = recipe
                 ingr.save()
             else:
-                new_ingr = Ingredients()
+                new_ingr = Ingredient()
                 new_ingr.recipe = recipe
                 new_ingr.name = ingr.instance.name
                 new_ingr.description = ingr.instance.description

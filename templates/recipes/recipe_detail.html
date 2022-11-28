@@ -1,4 +1,4 @@
-{% extends "recipesite/layout.html" %}
+{% extends "layout.html" %}
 {# Load the tag library #}
 {% load bootstrap5 %}
 {% block body %}
@@ -132,7 +132,7 @@
                                         <div class="container">
                                                 <div class="accordion" id="accordionExample">
                                                         {% for step in steplist %}
-                                                                {% include "recipesite/snippets/accordion.html" %}
+                                                                {% include "recipes/snippets/accordion.html" %}
                                                         {% endfor %}
                                                 </div>
                                         </div>

@@ -1,4 +1,4 @@
-{% extends "recipesite/layout.html" %}
+{% extends "layout.html" %}
 {# Load the tag library #}
 {% load static %}
 {% load bootstrap5 %}
@@ -12,7 +12,7 @@
                 <div class="container">
                     <div class="row gx-5 my-5" data-masonry='{"percentPosition": true }'>
                     {% for recipe in recipes_listview %}
-                        {% include "recipesite/snippets/bootcard.html" %}
+                        {% include "recipes/snippets/bootcard.html" %}
                     {% empty %}
                         <p>There are no Post to view at this time.</p>
                     {% endfor %}
@@ -25,6 +25,6 @@
 </div>                    
 {% endblock %}
 {% block script %}
-{% include "recipesite/snippets/masonry.html" %}
-<script src="{% static 'recipesite/index.js' %}" defer></script>
+{% include "recipes/snippets/masonry.html" %}
+<script src="{% static 'recipes/index.js' %}" defer></script>
 {% endblock %}

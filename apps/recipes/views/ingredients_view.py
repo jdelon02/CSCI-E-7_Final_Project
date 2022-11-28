@@ -25,7 +25,7 @@ class Index(ListView):
     """This is a docstring which describes the module"""
     model = Ingredient
     context_object_name = 'ingredients_listview'
-    template_name = 'recipesite/ingredients_list.html'
+    template_name = 'recipes/ingredients_list.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super(Index,
@@ -39,4 +39,4 @@ class Index(ListView):
 class IngredientsCreateView(CreateView):
     model = Ingredient
     form_class = IngredientForm
-    template_name = 'recipesite/ingredients_form.html'
+    template_name = 'recipes/ingredients_form.html'

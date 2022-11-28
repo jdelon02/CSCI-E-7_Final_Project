@@ -30,11 +30,11 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
         else:
-            return render(request, "recipesite/login.html", {
+            return render(request, "recipes/login.html", {
                 "message": "Invalid username and/or password."
             })
     else:
-        return render(request, "recipesite/login.html")
+        return render(request, "recipes/login.html")
 
 
 def logout_view(request):
@@ -53,7 +53,7 @@ def register(request):
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
-            return render(request, "recipesite/register.html", {
+            return render(request, "recipes/register.html", {
                 "message": "Passwords must match."
             })
 
@@ -62,13 +62,13 @@ def register(request):
             user = User.objects.create_user(username, email, password)
             user.save()
         except IntegrityError:
-            return render(request, "recipesite/register.html", {
+            return render(request, "recipes/register.html", {
                 "message": "Username already taken."
             })
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
-        return render(request, "recipesite/register.html")
+        return render(request, "recipes/register.html")
 
 
 @csrf_exempt
@@ -123,7 +123,7 @@ class UserDetailView(DetailView):
     """
     model = User
     context_object_name = 'user_detail'
-    template_name = 'recipesite/user.html'
+    template_name = 'recipes/user.html'
     # paginate_by = 10
 
     def get_context_data(self, *args, **kwargs):
