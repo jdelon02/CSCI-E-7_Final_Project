@@ -1,6 +1,6 @@
 from django.test import TestCase
 from apps.recipes.models import Recipes
-from apps.recipes.forms import recipesform
+from apps.recipes.forms import recipeform
 from apps.login.models import User
 
 # Create your tests here.

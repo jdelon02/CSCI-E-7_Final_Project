@@ -29,6 +29,7 @@ flake8 = "*"
 behave = "*"
 mock = "*"
 selenium-page-factory = "*"
+pint = "*"
 
 [dev-packages]
 coverage = "*"

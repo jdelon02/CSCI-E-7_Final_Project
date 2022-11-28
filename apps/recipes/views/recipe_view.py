@@ -18,8 +18,8 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from apps.recipes.models import *
 from apps.login.models.user import User
-from apps.recipes.forms.ingredientsform import IngredientsForm
-from apps.recipes.forms.recipesform import RecipesForm, IngredientFormSet, StepFormSet
+from apps.recipes.forms.ingredientform import IngredientForm
+from apps.recipes.forms.recipeform import RecipeForm, IngredientFormSet, StepFormSet
 
 
 paginationnum = 10
@@ -27,7 +27,7 @@ paginationnum = 10
 
 class Index(ListView):
     """This is a docstring which describes the module"""
-    model = Recipes
+    model = Recipe
     context_object_name = 'recipes_listview'
     template_name = 'recipesite/index.html'
     paginate_by = paginationnum
@@ -43,15 +43,15 @@ class Index(ListView):
     def get_queryset(self):
         query = self.request.GET.get('search')
         if query:
-            newquery = Recipes.objects.filter(name__contains=query).values_list('pk', flat=True)
-            queryset = Recipes.objects.filter(pk__in=list(newquery))
+            newquery = Recipe.objects.filter(name__contains=query).values_list('pk', flat=True)
+            queryset = Recipe.objects.filter(pk__in=list(newquery))
         else:
-            queryset = Recipes.objects.all().order_by('-id')
+            queryset = Recipe.objects.all().order_by('-id')
         return queryset
 
 
 class BookmarkListView(UserPassesTestMixin, ListView):
-    model = Recipes
+    model = Recipe
     context_object_name = 'recipes_listview'
     template_name = 'recipesite/index.html'
     paginate_by = paginationnum
@@ -74,7 +74,7 @@ class BookmarkListView(UserPassesTestMixin, ListView):
     def get_queryset(self):
         current_user = self.request.user.id
         bookies = User.objects.filter(pk=current_user).values_list('userbookmarks', flat=True)
-        queryset = Recipes.objects.filter(id__in=bookies).distinct().order_by('-id')
+        queryset = Recipe.objects.filter(id__in=bookies).distinct().order_by('-id')
         return queryset
 
     def save_button(request, recipe_id):
@@ -84,17 +84,17 @@ class BookmarkListView(UserPassesTestMixin, ListView):
             if request.method == "PUT":
                 data = json.loads(request.body)
                 postdata = data['user']
-                recipe = Recipes.objects.get(pk=recipe_id)
+                recipe = Recipe.objects.get(pk=recipe_id)
                 userLoad = User.objects.get(pk=postdata)
                 usercheck = userLoad.userbookmarks.all()
                 print(usercheck)
                 if recipe in usercheck:
-                    userLoad.userbookmarks.remove(Recipes.objects.get(pk=recipe_id))
+                    userLoad.userbookmarks.remove(Recipe.objects.get(pk=recipe_id))
                     userLoad.save()
                     print(userLoad)
                     saved = "Bookmark This"
                 else:
-                    userLoad.userbookmarks.add(Recipes.objects.get(pk=recipe_id))
+                    userLoad.userbookmarks.add(Recipe.objects.get(pk=recipe_id))
                     userLoad.save()
                     print(userLoad)
                     saved = "Saved to Bookmarks"
@@ -104,7 +104,7 @@ class BookmarkListView(UserPassesTestMixin, ListView):
 
 
 class RecipeDetailView(DetailView):
-    model = Recipes
+    model = Recipe
 
     def get_context_data(self, *args, **kwargs):
         context = super(RecipeDetailView,
@@ -112,18 +112,18 @@ class RecipeDetailView(DetailView):
         current_user = self.request.user.id
         context['currentUser'] = current_user
         current_recipe = self.kwargs['pk']
-        ingredientlist = Ingredients.objects.filter(recipe=current_recipe)
+        ingredientlist = Ingredient.objects.filter(recipe=current_recipe)
         ingredientlist = ingredientlist.all().order_by('id')
         context['ingredientlist'] = ingredientlist
         print(ingredientlist)
-        steplist = Steps.objects.filter(recipe=current_recipe)
+        steplist = Step.objects.filter(recipe=current_recipe)
         steplist = steplist.all().order_by('id')
         context['steplist'] = steplist
 
         userLoad = User.objects.get(pk=current_user)
         usercheck = userLoad.userbookmarks.all()
         print(usercheck)
-        thisrecipe = Recipes.objects.get(pk=current_recipe)
+        thisrecipe = Recipe.objects.get(pk=current_recipe)
         print(thisrecipe)
         context['bookmark'] = "Bookmark Me"
         if thisrecipe in usercheck:
@@ -139,7 +139,7 @@ class RecipeDetailView(DetailView):
                 data = json.loads(request.body)
                 userdata = User.objects.get(pk=data['user'])
                 postdata = data['id']
-                postcheck = get_object_or_404(Recipes, pk=postdata)
+                postcheck = get_object_or_404(Recipe, pk=postdata)
                 if postcheck.likes.filter(id=userdata.id):
                     postcheck.likes.remove(userdata)  # remove user from likes
                     liked = False
@@ -156,7 +156,7 @@ class RecipeDetailView(DetailView):
         if is_ajax:
             if request.method == "GET":
                 print(recipe_id)
-                postcheck = Recipes.objects.get(pk=recipe_id)
+                postcheck = Recipe.objects.get(pk=recipe_id)
                 userid = postcheck.user_id.id
                 # print(userid)
                 if postcheck:
@@ -169,7 +169,7 @@ class RecipeDetailView(DetailView):
                 print(data)
                 # postdata = User.objects.get(username=data['user'])
                 # postdata = data['id']
-                postcheck = get_object_or_404(Recipes, pk=recipe_id)
+                postcheck = get_object_or_404(Recipe, pk=recipe_id)
                 if postcheck:
                     postcheck.body = data
                     postcheck.save()
@@ -185,8 +185,8 @@ class RecipeDetailView(DetailView):
 
 
 class RecipeCreateView(LoginRequiredMixin, CreateView):
-    model = Recipes
-    form_class = RecipesForm
+    model = Recipe
+    form_class = RecipeForm
     template_name = 'recipesite/recipes_edit.html'
 
     def test_func(self):
@@ -298,9 +298,9 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
 
 
 class RecipeUpdateView(UpdateView):
-    model = Recipes
+    model = Recipe
     # fields = '__all__'
-    form_class = RecipesForm
+    form_class = RecipeForm
     formset_class = {
         'ingredientformset': IngredientFormSet,
         'stepformset': StepFormSet

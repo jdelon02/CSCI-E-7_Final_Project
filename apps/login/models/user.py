@@ -16,7 +16,7 @@ class User(AbstractUser):
         null=True
     )
     userbookmarks = ManyToManyField(
-        'recipes.Recipes'
+        'recipes.Recipe'
     )
 
     class Meta:

@@ -17,13 +17,13 @@ from django.views import View
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from apps.recipes.models import *
-from apps.recipes.forms.ingredientsform import IngredientsForm
-from apps.recipes.forms.recipesform import RecipesForm, IngredientFormSet, StepFormSet
+from apps.recipes.forms.ingredientform import IngredientForm
+from apps.recipes.forms.recipeform import RecipeForm, IngredientFormSet, StepFormSet
 
 
 class Index(ListView):
     """This is a docstring which describes the module"""
-    model = Ingredients
+    model = Ingredient
     context_object_name = 'ingredients_listview'
     template_name = 'recipesite/ingredients_list.html'
 
@@ -37,6 +37,6 @@ class Index(ListView):
 
 
 class IngredientsCreateView(CreateView):
-    model = Ingredients
-    form_class = IngredientsForm
+    model = Ingredient
+    form_class = IngredientForm
     template_name = 'recipesite/ingredients_form.html'

@@ -1,7 +1,7 @@
 """This is a docstring which describes the module"""
 from curses.ascii import US
 from django.forms import CharField, ModelForm, Textarea
-from recipes.models import Steps
+from recipes.models import Step
 
 
 class StepForm(ModelForm):
@@ -9,7 +9,7 @@ class StepForm(ModelForm):
 
     class Meta:
         """This is a docstring which describes the module"""
-        model = Steps
+        model = Step
         fields = ['step']
 
     # def __str__(self):

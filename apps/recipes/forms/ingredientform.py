@@ -3,17 +3,17 @@ from django import forms
 from django.forms import ModelForm, inlineformset_factory, CharField, ChoiceField, Select
 from django.utils.translation import gettext_lazy as _
 from model_utils import Choices
-from apps.recipes.models import Ingredients
+from apps.recipes.models import Ingredient
 
 
-class IngredientsForm(ModelForm):
+class IngredientForm(ModelForm):
     """This is a docstring which describes the module"""
     # name = CharField(
     # )
 
     class Meta:
         """This is a docstring which describes the module"""
-        model = Ingredients
+        model = Ingredient
         fields = [
             'quantitywhole',
             'quantityfraction',
@@ -26,7 +26,7 @@ class IngredientsForm(ModelForm):
     #     return self.name
 
     def __init__(self, *args, **kwargs):
-        super(IngredientsForm, self).__init__(*args, **kwargs)
+        super(IngredientForm, self).__init__(*args, **kwargs)
         UNITSTATUS = Choices(
             (None, 'Measurement'),
             ('cup', ('Cup')),

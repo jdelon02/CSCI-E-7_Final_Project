@@ -10,18 +10,18 @@ from django.db.models import (
     ForeignKey,
     CharField,
 )
-from apps.recipes.models import Recipes
+from apps.recipes.models import Recipe
 
 # TODO: Description Field to model, recipe.
 
 
-class Steps(Model):
+class Step(Model):
 
     step = CharField(
         max_length=240
     )
     recipe = ForeignKey(
-        Recipes,
+        Recipe,
         on_delete=CASCADE,
         related_name='recipe_Steps',
         blank=True,

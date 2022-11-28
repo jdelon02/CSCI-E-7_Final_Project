@@ -15,9 +15,9 @@ class Bookmarks(Model):
         on_delete=CASCADE
     )
     recipes = ForeignKey(
-        'recipes.Recipes',
+        'recipes.Recipe',
         on_delete=CASCADE,
-        related_name='recipes'
+        related_name='recipe'
     )
 
     class Meta:

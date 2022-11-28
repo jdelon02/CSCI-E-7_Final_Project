@@ -3,18 +3,20 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from model_utils import Choices
+
 from django.db.models import (
     Model,
     CASCADE,
     ForeignKey,
     IntegerField,
     TextField,
-    CharField
+    CharField,
+    FloatField
 )
-from apps.recipes.models import Recipes
+from apps.recipes.models import Recipe
+from apps.recipes.utils import number_str_to_float
 
-
-class Ingredients(Model):
+class Ingredient(Model):
     UNITSTATUS = Choices(
         ('cup', ('Cup')),
         ('tablespoon', ('Tablespoon')),
@@ -36,7 +38,7 @@ class Ingredients(Model):
     )
     """Data model for user accounts."""
     recipe = ForeignKey(
-        Recipes,
+        Recipe,
         on_delete=CASCADE,
         related_name='recipe_Recipes',
         blank=True,
@@ -50,6 +52,10 @@ class Ingredients(Model):
     quantityfraction = CharField(
         max_length=8,
         choices=QUANTS,
+        blank=True,
+        null=True
+    )
+    quantityCalc = FloatField(
         blank=True,
         null=True
     )
@@ -76,3 +82,16 @@ class Ingredients(Model):
     def __str__(self):
         return self.name
         # return str(self.name)
+
+        
+    def save(self, *args, **kwargs):
+        if self.quantitywhole != None and self.quantityfraction != None:
+            qty = str(self.quantitywhole) + ' ' + self.quantityfraction
+        if self.quantityfraction != None and self.quantitywhole == None:
+            qty = str(self.quantityfraction)
+        else:
+            qty = str(self.quantitywhole)
+        qty_as_float, qty_as_float_success = number_str_to_float(qty)
+        if qty_as_float_success:
+            self.quantityCalc = qty_as_float
+        super().save(*args, **kwargs)

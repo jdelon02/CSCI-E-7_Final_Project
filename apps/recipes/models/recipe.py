@@ -24,7 +24,7 @@ from apps.login.models import User
 # TODO: Description Field to model, recipe.
 
 
-class Recipes(Model):
+class Recipe(Model):
 
     class Media(object):
         js = formset_media_js + (
@@ -138,3 +138,4 @@ class Recipes(Model):
 
     def get_absolute_url(self):
         return reverse('recipedetail', kwargs={'pk': self.pk})
+    

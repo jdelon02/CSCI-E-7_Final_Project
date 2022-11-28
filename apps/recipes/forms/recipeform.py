@@ -5,13 +5,13 @@ from model_utils import Choices
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.forms import CharField, ModelForm, inlineformset_factory, ChoiceField, Select, Textarea
-from apps.recipes.forms.ingredientsform import IngredientsForm
-from apps.recipes.forms.stepsform import StepForm
-from apps.recipes.models import Recipes, Ingredients, Steps
+from apps.recipes.forms.ingredientform import IngredientForm
+from apps.recipes.forms.stepform import StepForm
+from apps.recipes.models import Recipe, Ingredient, Step
 from easy_select2 import select2_modelform, Select2
 
 
-class RecipesForm(ModelForm):
+class RecipeForm(ModelForm):
     """This is a docstring which describes the module"""
     QUANTS = Choices(
         ('1/4', _('1/4')),
@@ -23,7 +23,7 @@ class RecipesForm(ModelForm):
 
     class Meta:
         """This is a docstring which describes the module"""
-        model = Recipes
+        model = Recipe
         fields = [
             'name',
             'description',
@@ -56,7 +56,7 @@ class RecipesForm(ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        super(RecipesForm, self).__init__(*args, **kwargs)
+        super(RecipeForm, self).__init__(*args, **kwargs)
 
         DIFFS = Choices(
             (None, 'Skill Level'),
@@ -136,9 +136,9 @@ class RecipesForm(ModelForm):
 
 
 IngredientFormSet = inlineformset_factory(
-    Recipes,
-    Ingredients,
-    form=IngredientsForm,
+    Recipe,
+    Ingredient,
+    form=IngredientForm,
     extra=1,
     can_delete=True
 )
@@ -155,8 +155,8 @@ def ingredientset_view(request):
 
 
 StepFormSet = inlineformset_factory(
-    Recipes,
-    Steps,
+    Recipe,
+    Step,
     form=StepForm,
     extra=1,
     can_delete=True

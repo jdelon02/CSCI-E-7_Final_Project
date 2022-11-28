@@ -12,8 +12,8 @@ from django.views import View
 from django.contrib import messages
 from django.views.generic import ListView, DetailView
 from apps.login.models import User, UserFollowing
-from apps.recipes.models import Recipes
-from apps.recipes.forms import recipesform
+from apps.recipes.models import Recipe
+from apps.recipes.forms import recipeform
 
 
 def login_view(request):
@@ -132,7 +132,7 @@ class UserDetailView(DetailView):
         current_id = self.kwargs['pk']
         current_user = self.request.user.id
         context['currentUser'] = self.request.user.id
-        allposts = Recipes.objects.all().filter(author=current_id).distinct().order_by('-id')
+        allposts = Recipe.objects.all().filter(author=current_id).distinct().order_by('-id')
         context["allrecipes"] = allposts
 
         context['recipe_user'] = current_id
@@ -186,7 +186,7 @@ def like_button(request, post_id):
         data = json.loads(request.body)
         userdata = User.objects.get(username=data['user'])
         postdata = data['id']
-        postcheck = get_object_or_404(Recipes, pk=postdata)
+        postcheck = get_object_or_404(Recipe, pk=postdata)
         if postcheck.likes.filter(id=userdata.id):
             postcheck.likes.remove(userdata)  # remove user from likes
             liked = False
