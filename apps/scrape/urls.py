@@ -9,12 +9,12 @@ from django.conf.urls.static import static
 from django.urls import include, path
 from django.contrib import admin
 # from django.contrib.auth import views # as auth_views
-from apps.scrape import views
+from apps.scrape.views import ScrapeFormView
 
 
 urlpatterns = [
     # Examples:
-    path("scrape", views.Index, name='scrape'),
+    path("scrape", ScrapeFormView.as_view(), name='scrape'),
 ]
 
 if settings.DEBUG:

@@ -75,7 +75,8 @@ class BookmarkListView(UserPassesTestMixin, ListView):
         current_user = self.request.user.id
         bookies = User.objects.filter(pk=current_user).values_list('userbookmarks', flat=True)
         queryset = Recipe.objects.filter(id__in=bookies).distinct().order_by('-id')
-        return queryset
+        if queryset:
+            return queryset
 
     def save_button(request, recipe_id):
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
@@ -110,25 +111,25 @@ class RecipeDetailView(DetailView):
         context = super(RecipeDetailView,
                         self).get_context_data(*args, **kwargs)
         current_user = self.request.user.id
-        context['currentUser'] = current_user
+        usercheck = ''
+        if current_user:
+            context['currentUser'] = current_user
+            userLoad = User.objects.get(pk=current_user)
+            if userLoad:
+                usercheck = userLoad.userbookmarks.all()
+            
         current_recipe = self.kwargs['pk']
         ingredientlist = Ingredient.objects.filter(recipe=current_recipe)
         ingredientlist = ingredientlist.all().order_by('id')
         context['ingredientlist'] = ingredientlist
-        print(ingredientlist)
         steplist = Step.objects.filter(recipe=current_recipe)
         steplist = steplist.all().order_by('id')
         context['steplist'] = steplist
-
-        userLoad = User.objects.get(pk=current_user)
-        usercheck = userLoad.userbookmarks.all()
-        print(usercheck)
         thisrecipe = Recipe.objects.get(pk=current_recipe)
-        print(thisrecipe)
         context['bookmark'] = "Bookmark Me"
-        if thisrecipe in usercheck:
-            context['bookmark'] = "Bookmark Saved"
-        print(context['bookmark'])
+        if usercheck != '':
+            if thisrecipe in usercheck:
+                context['bookmark'] = "Bookmark Saved"
         return context
 
     def like_button(request, recipe_id):
