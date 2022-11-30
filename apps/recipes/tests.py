@@ -1,5 +1,5 @@
 from django.test import TestCase
-from apps.recipes.models import Recipes
+from apps.recipes.models import Recipe
 from apps.recipes.forms import recipeform
 from apps.login.models import User
 
@@ -10,7 +10,7 @@ import mock
 class RecipeTesting(TestCase):
 
     def setUp(self):
-        self.recipe = Recipes.objects.create(
+        self.recipe = Recipe.objects.create(
             cookHour=1,
             cookMin=15,
             name='jdelon02 test recipe',
@@ -22,7 +22,7 @@ class RecipeTesting(TestCase):
         )
 
     def test_recipe_model(self):
-        self.assertTrue(isinstance(self.recipe, Recipes))
+        self.assertTrue(isinstance(self.recipe, Recipe))
 
     def test_recipe_cooktime(self):
         self.assertEqual(str(self.recipe.cookHour), '1')
@@ -54,7 +54,7 @@ class RecipeTesting(TestCase):
         testuser.username = 'testy'
         testuser.email = 'testy@mctesterston.com'
         testuser.password = 'Pass123'
-        testrecipe = mock.Mock(spec=Recipes)
+        testrecipe = mock.Mock(spec=Recipe)
         testrecipe.name = self.recipe.name
         self.assertEqual(str(testrecipe.name), str(self.recipe.name))
         testrecipe.author = testuser
