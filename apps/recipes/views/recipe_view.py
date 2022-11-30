@@ -117,7 +117,7 @@ class RecipeDetailView(DetailView):
             userLoad = User.objects.get(pk=current_user)
             if userLoad:
                 usercheck = userLoad.userbookmarks.all()
-            
+
         current_recipe = self.kwargs['pk']
         ingredientlist = Ingredient.objects.filter(recipe=current_recipe)
         ingredientlist = ingredientlist.all().order_by('id')

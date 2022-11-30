@@ -138,4 +138,3 @@ class Recipe(Model):
 
     def get_absolute_url(self):
         return reverse('recipedetail', kwargs={'pk': self.pk})
-    

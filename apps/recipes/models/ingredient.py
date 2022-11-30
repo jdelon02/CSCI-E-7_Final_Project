@@ -16,6 +16,7 @@ from django.db.models import (
 from apps.recipes.models import Recipe
 from apps.recipes.utils import number_str_to_float
 
+
 class Ingredient(Model):
     UNITSTATUS = Choices(
         ('cup', ('Cup')),
@@ -83,11 +84,10 @@ class Ingredient(Model):
         return self.name
         # return str(self.name)
 
-        
     def save(self, *args, **kwargs):
-        if self.quantitywhole != None and self.quantityfraction != None:
+        if self.quantitywhole is not None and self.quantityfraction is not None:
             qty = str(self.quantitywhole) + ' ' + self.quantityfraction
-        if self.quantityfraction != None and self.quantitywhole == None:
+        if self.quantityfraction is not None and self.quantitywhole is None:
             qty = str(self.quantityfraction)
         else:
             qty = str(self.quantitywhole)
