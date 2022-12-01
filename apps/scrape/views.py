@@ -40,7 +40,7 @@ class ScrapeFormView(View):
         if current_user:
             data['currentUser'] = current_user
             userLoad = User.objects.get(pk=current_user)
-            print(userLoad)
+            # print(userLoad)
 
         if form.is_valid():
             # <process form cleaned data>
@@ -53,8 +53,43 @@ class ScrapeFormView(View):
                     if recipe_scrapes:
                         recipe = scrape_html(html=recipe_scrapes, org_url=url)
 
+                        try:
+                            prepTime = recipe.prep_time()
+                            self.__prepTime(prepTime)
+                        except NotImplementedError:
+                            pass
+
+                        try:
+                            cookTime = recipe.cook_time()
+                            self.__prepTime(cookTime)
+                        except NotImplementedError:
+                            pass
+
+                        try:
+                            cuisine = recipe.cuisine()
+                            self.__prepTime(cuisine)
+                        except NotImplementedError:
+                            pass
+
+                        try:
+                            category = recipe.category()
+                            self.__prepTime(category)
+                        except NotImplementedError:
+                            pass
+
+                        # ['__annotations__', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__',
+                        # '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__',
+                        # '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__',
+                        # '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__',
+                        # '__str__', '__subclasshook__', '__weakref__', 'author', 'canonical_url',
+                        # 'category', 'cook_time', 'cuisine', 'description', 'host', 'image', 'ingredients',
+                        # 'instructions', 'instructions_list', 'language', 'links', 'nutrients', 'page_data',
+                        # 'plugins_initialized', 'prep_time', 'ratings', 'reviews', 'schema', 'site_name',
+                        # 'soup', 'title', 'total_time', 'url', 'wild_mode', 'yields']
+
                         recipeScrape = Recipe()
                         recipeScrape.name = recipe.title()
+
                         if userLoad:
                             recipeScrape.author = userLoad
                         recipeScrape.save()
@@ -106,10 +141,12 @@ class ScrapeFormView(View):
             elif first_digit[0].lower() in units:
                 results['unit'] = str(first_digit[0])
             else:
-                namesplit = re.findall(",", ingr)
-                if namesplit:
-                    results['name'] = str(namesplit[0])
-                    results['description'] = str(namesplit[1])
+                commacheck = re.findall(",", ingr)
+                if commacheck:
+                    namesplit = ingr.split(",", 1)
+                    if namesplit:
+                        results['name'] = str(namesplit[0])
+                        results['description'] = str(namesplit[1])
                 else:
                     results['name'] = ingr
         if results['name'] == '':
@@ -162,3 +199,19 @@ class ScrapeFormView(View):
             singleStep.recipe = recipeScrape
             singleStep.step = instr
             singleStep.save()
+
+    def __prepTime(self, prep_time):
+        print(prep_time)
+        pass
+
+    def __cookTime(self, cook_time):
+        print(cook_time)
+        pass
+
+    def __cuisine(self, cuisine):
+        print(cuisine)
+        pass
+
+    def __category(self, category):
+        print(category)
+        pass
