@@ -56,8 +56,12 @@ class ScrapeFormView(View):
                         try:
                             recipe = scrape_html(html=recipe_scrapes, org_url=url)
                         except:
-                            return HttpResponseRedirect(reverse_lazy('index'))
-
+                            try:
+                                recipe = scrape_me(url, wild_mode=True)
+                            except:
+                                return HttpResponseRedirect(reverse_lazy('index'))
+                            
+                    
                         if recipe != '':
 
                             # Custom Scraper for Prep Time and Cook Time.  Default is "total time"
