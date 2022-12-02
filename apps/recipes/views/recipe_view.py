@@ -75,8 +75,7 @@ class BookmarkListView(UserPassesTestMixin, ListView):
         current_user = self.request.user.id
         bookies = User.objects.filter(pk=current_user).values_list('userbookmarks', flat=True)
         queryset = Recipe.objects.filter(id__in=bookies).distinct().order_by('-id')
-        if queryset:
-            return queryset
+        return queryset
 
     def save_button(request, recipe_id):
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
@@ -300,14 +299,13 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
 
 class RecipeUpdateView(UpdateView):
     model = Recipe
-    # fields = '__all__'
     form_class = RecipeForm
     formset_class = {
         'ingredientformset': IngredientFormSet,
         'stepformset': StepFormSet
     }
     template_name = 'edit.html'
-    template_name = 'recipes/recipes_edit.html'
+    template_name = 'recipes/recipe_edit.html'
 
     def test_func(self):
         test = self.request.user.id

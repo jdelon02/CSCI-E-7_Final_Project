@@ -1,6 +1,7 @@
 """This is a docstring which describes the module"""
 import json
 import re
+from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 import requests
 import cloudscraper
@@ -51,63 +52,80 @@ class ScrapeFormView(View):
                 if scraper:
                     recipe_scrapes = scraper.get(url).text
                     if recipe_scrapes:
-                        recipe = scrape_html(html=recipe_scrapes, org_url=url)
-
+                        recipe = ''
                         try:
-                            prepTime = recipe.prep_time()
-                            self.__prepTime(prepTime)
-                        except NotImplementedError:
-                            pass
+                            recipe = scrape_html(html=recipe_scrapes, org_url=url)
+                        except:
+                            return HttpResponseRedirect(reverse_lazy('index'))
 
-                        try:
-                            cookTime = recipe.cook_time()
-                            self.__prepTime(cookTime)
-                        except NotImplementedError:
-                            pass
+                        if recipe != '':
 
-                        try:
-                            cuisine = recipe.cuisine()
-                            self.__prepTime(cuisine)
-                        except NotImplementedError:
-                            pass
+                            # Custom Scraper for Prep Time and Cook Time.  Default is "total time"
+                            # But I want the separate info.
+                            soup = BeautifulSoup(recipe_scrapes, "html.parser")
 
-                        try:
-                            category = recipe.category()
-                            self.__prepTime(category)
-                        except NotImplementedError:
-                            pass
+                            recipeScrape = Recipe()
+                            recipeScrape.name = recipe.title()
 
-                        # ['__annotations__', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__',
-                        # '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__',
-                        # '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__',
-                        # '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__',
-                        # '__str__', '__subclasshook__', '__weakref__', 'author', 'canonical_url',
-                        # 'category', 'cook_time', 'cuisine', 'description', 'host', 'image', 'ingredients',
-                        # 'instructions', 'instructions_list', 'language', 'links', 'nutrients', 'page_data',
-                        # 'plugins_initialized', 'prep_time', 'ratings', 'reviews', 'schema', 'site_name',
-                        # 'soup', 'title', 'total_time', 'url', 'wild_mode', 'yields']
+                            try:
+                                prepTime = soup.find(text="Prep time").next_element.text
+                                if prepTime:
+                                    prepTime = prepTime.strip().lower()
+                                    prepMin = self.__splitTime(prepTime, "minutes")
+                                    if prepMin:
+                                        recipeScrape.prepMin = prepMin
+                                    prepHour = self.__splitTime(prepTime, "hour")
+                                    if prepHour:
+                                        recipeScrape.prepHour = int(prepHour)
+                            except:
+                                pass
 
-                        recipeScrape = Recipe()
-                        recipeScrape.name = recipe.title()
+                            try:
+                                cookTime = soup.find(text="Cook time").next_element.text
+                                if cookTime:
+                                    cookTime = cookTime.strip().lower()
+                                    cookMin = self.__splitTime(cookTime, "minutes")
+                                    if cookMin:
+                                        recipeScrape.cookMin = cookMin
+                                    cookHour = self.__splitTime(cookTime, "hour")
+                                    if cookHour:
+                                        print(True)
+                                        print(cookHour)
+                                        recipeScrape.cookHour = int(cookHour)
+                            except:
+                                pass
 
-                        if userLoad:
-                            recipeScrape.author = userLoad
-                        recipeScrape.save()
-                        # print(recipeScrape.id)
+                            try:
+                                totalTime = recipe.total_time()
+                                print(totalTime)
+                            except:
+                                pass
 
-                    scrapeInstructions = recipe.instructions().splitlines()
+                            try:
+                                cuisine = recipe.cuisine()
+                                self.__prepTime(cuisine)
+                            except NotImplementedError:
+                                pass
 
-                    # Let's save the instructions as steps.
-                    self.__stepSave(scrapeInstructions, recipeScrape)
+                            try:
+                                category = recipe.category()
+                                self.__prepTime(category)
+                            except NotImplementedError:
+                                pass
 
-                    # attributes = dir(recipe)
-                    # print(recipe.title())
+                            if userLoad:
+                                recipeScrape.author = userLoad
+                            recipeScrape.save()
 
-                    ingrList = recipe.ingredients()
-                    self.__ingrSave(ingrList, recipeScrape)
+                            scrapeInstructions = recipe.instructions().splitlines()
 
-                    # print(f"{attributes}")
-                    return HttpResponseRedirect('/recipe/' + str(recipeScrape.id))
+                            # Let's save the instructions as steps.
+                            self.__stepSave(scrapeInstructions, recipeScrape)
+
+                            ingrList = recipe.ingredients()
+                            self.__ingrSave(ingrList, recipeScrape)
+
+                            return HttpResponseRedirect('/recipe/' + str(recipeScrape.id))
 
     def __break_up_string_number(self, ingr):
         units = (
@@ -200,14 +218,6 @@ class ScrapeFormView(View):
             singleStep.step = instr
             singleStep.save()
 
-    def __prepTime(self, prep_time):
-        print(prep_time)
-        pass
-
-    def __cookTime(self, cook_time):
-        print(cook_time)
-        pass
-
     def __cuisine(self, cuisine):
         print(cuisine)
         pass
@@ -215,3 +225,20 @@ class ScrapeFormView(View):
     def __category(self, category):
         print(category)
         pass
+
+    def __splitTime(self, timestring, method):
+        print(method)
+
+        timesplit = timestring.split(":", 1)
+        if len(timesplit) > 1:
+            if method == 'minutes':
+                results = timesplit[1].isdigit()
+                return results
+            else:
+                results = timesplit[0].isdigit()
+                return results
+
+        if re.search(method, timestring):
+            results = re.findall(r"\d+", timestring)
+            results = ''.join(map(str, results))
+            return results
