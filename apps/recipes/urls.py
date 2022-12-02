@@ -28,6 +28,7 @@ urlpatterns = [
     path("api/bookmark/<int:recipe_id>", recipe_view.BookmarkListView.save_button, name='save'),
 ]
 
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)

@@ -19,6 +19,7 @@ urlpatterns = [
     path('', include('apps.login.urls')),
     path('', include('apps.recipes.urls')),
 
+
 ]
 
 if settings.DEBUG:

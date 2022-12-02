@@ -9,7 +9,7 @@ from .common import *
 
 
 # ##### DEBUG CONFIGURATION ###############################
-DEBUG = True
+DEBUG = False
 
 # allow all hosts during development
 ALLOWED_HOSTS = ['*']
