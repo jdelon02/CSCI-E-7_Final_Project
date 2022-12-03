@@ -37,7 +37,7 @@ jobs:
     - name: Install dependencies
       if: steps.cache-pipenv.outputs.cache-hit != 'true'
       run: |
-        pipenv --python {{ python-version }} install -d
+        pipenv --python ${{ matrix.python-version }} install -d
 
     - name: Run Flake8 tests   
       run: |
