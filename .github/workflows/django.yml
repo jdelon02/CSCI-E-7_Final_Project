@@ -37,7 +37,7 @@ jobs:
     - name: Install dependencies
       if: steps.cache-pipenv.outputs.cache-hit != 'true'
       run: |
-        pipenv install -d
+        pipenv --python 3.7 install -d
 
     - name: Run Flake8 tests   
       run: |
