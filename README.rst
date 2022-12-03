@@ -12,18 +12,18 @@ I don't know if this will ever be completed, but it is a fun project that I have
 
 The following functionality is in a working state:
 
-Login ability
-Create recipes
-Bookmark others recipes
-Like/unlike recipes (may evolve to a rating system)
-Scrap recipes from other sites.
+* Login ability
+* Create recipes
+* Bookmark others recipes
+* Like/unlike recipes (may evolve to a rating system)
+* Scrap recipes from other sites.
 
 The functionality I still need to develop:
 
-Group/Family membership (and group relations between families)
-Group Family approval process (how to approve relatinships)
-Different entities beyond recipes (think "family game night" events, picture sharing, etc...)
-Twitter-like feeds for groups.
+* Group/Family membership (and group relations between families)
+* Group Family approval process (how to approve relatinships)
+* Different entities beyond recipes (think "family game night" events, picture sharing, etc...)
+* Twitter-like feeds for groups.
 
 Meta
 ----
@@ -46,10 +46,10 @@ Usage
 
 Site can be cloned from github, and uses a sqlite3 db as backend (for now).
 To run: 
-clone, 
-create migrations, 
-run migrations, 
-run server.
+* clone, 
+* create migrations, 
+* run migrations, 
+* run server.
 
 Documentation
 -------------
@@ -66,16 +66,16 @@ The list is available at https://raw.githubusercontent.com/jdelon02/CSCI-E-7_Fin
 
 For the Scraper, the site uses 3 main libraries.  
 One, a recipe scaper library:
-openeats-recipe-scraper
+* openeats-recipe-scraper
 Two, I also had to add a workaround because many of the sites I attempted to scrape had Bot/DDOS protection on them provided by cloudflare.
-cloudscraper
+* cloudscraper
 Three, urlib to scrape images and save them.
 
 Specific Changes for Final Project for: CSCI E-7 Section 1
-1.  Added abiity to scrape recipes from other sites using django form (no model, since it inherits recipe), and scraper libs.
-2.  Used regex to parse prep time (hh:mm).
-3.  Used regex to parse cook time (hh:mm).
-4.  Used urlib to save image to file.
+#. Added abiity to scrape recipes from other sites using django form (no model, since it inherits recipe), and scraper libs.
+#. Used regex to parse prep time (hh:mm).
+#. Used regex to parse cook time (hh:mm).
+#. Used urlib to save image to file.
 
 Caveats
 -------
