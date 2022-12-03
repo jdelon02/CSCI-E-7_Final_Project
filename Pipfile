@@ -30,6 +30,7 @@ behave = "*"
 mock = "*"
 selenium-page-factory = "*"
 pint = "*"
+wget = "*"
 
 [dev-packages]
 coverage = "*"

@@ -18,7 +18,7 @@ SITE_NAME = basename(DJANGO_ROOT)
 STATIC_ROOT = join(PROJECT_ROOT, 'run', 'static')
 
 # collect media files here
-MEDIA_ROOT = join(PROJECT_ROOT, 'run', 'media')
+MEDIA_ROOT = join(PROJECT_ROOT, 'media')
 
 # look for static assets here
 STATICFILES_DIRS = [
@@ -133,7 +133,7 @@ STATIC_URL = '/static/'
 
 # the URL for media files
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/media/'
+# MEDIA_ROOT = '/media/'
 # MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 
 

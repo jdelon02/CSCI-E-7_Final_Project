@@ -3,6 +3,9 @@ import json
 import re
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
+import urllib.request
+from django.conf import settings
+import wget
 import requests
 import cloudscraper
 from recipe_scrapers import scrape_me, scrape_html
@@ -60,8 +63,7 @@ class ScrapeFormView(View):
                                 recipe = scrape_me(url, wild_mode=True)
                             except:
                                 return HttpResponseRedirect(reverse_lazy('index'))
-                            
-                    
+
                         if recipe != '':
 
                             # Custom Scraper for Prep Time and Cook Time.  Default is "total time"
@@ -116,6 +118,10 @@ class ScrapeFormView(View):
                                 self.__prepTime(category)
                             except NotImplementedError:
                                 pass
+
+                            if recipe.image():
+                                print(dir(recipe.image()))
+                                recipeScrape.recipe_img = self.__download_image(recipe.image())
 
                             if userLoad:
                                 recipeScrape.author = userLoad
@@ -246,3 +252,15 @@ class ScrapeFormView(View):
             results = re.findall(r"\d+", timestring)
             results = ''.join(map(str, results))
             return results
+
+    def __download_image(self, url):
+        file_name = url.split('/')[-1]
+
+        file_path = settings.MEDIA_ROOT + '/images/'
+        # print(file_name)
+        full_path = file_path + file_name
+
+        opener = urllib.request.URLopener()
+        opener.addheader('User-Agent', 'whatever')
+        filename, headers = opener.retrieve(url, full_path)
+        return '/images/' + file_name
