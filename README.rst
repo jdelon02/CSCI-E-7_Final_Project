@@ -66,9 +66,13 @@ The list is available at https://raw.githubusercontent.com/jdelon02/CSCI-E-7_Fin
 
 For the Scraper, the site uses 3 main libraries.  
 One, a recipe scaper library:
+
 * openeats-recipe-scraper
+
 Two, I also had to add a workaround because many of the sites I attempted to scrape had Bot/DDOS protection on them provided by cloudflare.
+
 * cloudscraper
+
 Three, urlib to scrape images and save them.
 
 Specific Changes for Final Project for: CSCI E-7 Section 1
