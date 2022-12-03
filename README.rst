@@ -62,7 +62,7 @@ For this project, I added abiity to scrape a recipe, and then edit it.
 Libraries Used
 --------------
 I have added several libraries to the overall project for the current iteration.  
-The list is available at Pipfile.lock
+The list is available at https://raw.githubusercontent.com/jdelon02/CSCI-E-7_Final_Project/main/Pipfile
 
 For the Scraper, the site uses 3 main libraries.  
 One, a recipe scaper library:
@@ -72,7 +72,12 @@ cloudscraper
 Three, urlib to scrape images and save them.
 
 Specific Changes for Final Project for: CSCI E-7 Section 1
-1.  Added abiity to scrape recipes from other sites.
+1.  Added abiity to scrape recipes from other sites using django form (no model, since it inherits recipe), and scraper libs.
 2.  Used regex to parse prep time (hh:mm).
 3.  Used regex to parse cook time (hh:mm).
 4.  Used urlib to save image to file.
+
+Caveats
+-------
+I did NOT put in a check to see if recipe was already in system.  Since I am still developing, I wanted to be able re-run exact import in order to see progress.
+If parse error occurs, it just bounces to home page.  I need to add better error control/checking.
