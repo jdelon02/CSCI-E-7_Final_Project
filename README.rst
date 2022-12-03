@@ -54,10 +54,10 @@ To run:
 Documentation
 -------------
 
-When site is run on server, first step is to register an account.  
-Once that is done, login to site. As logged in user, you can search, add, update, and view recipes on the site.
-You can bookmark favorites and like recipes from other people.
-For this project, I added abiity to scrape a recipe, and then edit it.
+#. When site is run on server, first step is to register an account.  
+#. Once that is done, login to site. As logged in user, you can search, add, update, and view recipes on the site.
+#. You can bookmark favorites and like recipes from other people.
+#. For this project, I added abiity to scrape a recipe, and then edit it.
 
 Libraries Used
 --------------
@@ -80,5 +80,5 @@ Specific Changes for Final Project for: CSCI E-7 Section 1
 
 Caveats
 -------
-I did NOT put in a check to see if recipe was already in system.  Since I am still developing, I wanted to be able re-run exact import in order to see progress.
-If parse error occurs, it just bounces to home page.  I need to add better error control/checking.
+* I did NOT put in a check to see if recipe was already in system.  Since I am still developing, I wanted to be able re-run exact import in order to see progress.
+* If parse error occurs, it just bounces to home page.  I need to add better error control/checking.
