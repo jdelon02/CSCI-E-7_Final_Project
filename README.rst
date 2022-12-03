@@ -72,6 +72,7 @@ Two, I also had to add a workaround because many of the sites I attempted to scr
 Three, urlib to scrape images and save them.
 
 Specific Changes for Final Project for: CSCI E-7 Section 1
+
 #. Added abiity to scrape recipes from other sites using django form (no model, since it inherits recipe), and scraper libs.
 #. Used regex to parse prep time (hh:mm).
 #. Used regex to parse cook time (hh:mm).
