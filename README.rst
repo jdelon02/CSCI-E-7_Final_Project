@@ -47,6 +47,7 @@ Usage
 Site can be cloned from github, and uses a sqlite3 db as backend (for now).
 To run: 
 * clone, 
+* Site uses pipenv for dependencies, not requirements.txt.  So, to install, use pipenv install -d
 * create migrations, 
 * run migrations, 
 * run server.
