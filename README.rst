@@ -25,10 +25,6 @@ Group Family approval process (how to approve relatinships)
 Different entities beyond recipes (think "family game night" events, picture sharing, etc...)
 Twitter-like feeds for groups.
 
-
-
-
-
 Meta
 ----
 
@@ -61,6 +57,7 @@ Documentation
 When site is run on server, first step is to register an account.  
 Once that is done, login to site. As logged in user, you can search, add, update, and view recipes on the site.
 You can bookmark favorites and like recipes from other people.
+For this project, I added abiity to scrape a recipe, and then edit it.
 
 Libraries Used
 --------------
@@ -70,4 +67,12 @@ The list is available at Pipfile.lock
 For the Scraper, the site uses 3 main libraries.  
 One, a recipe scaper library:
 openeats-recipe-scraper
-I also had to add a workaround because many of the sites I attempted to scrape had Bot/DDOS protection on them provided by cloudflare.
+Two, I also had to add a workaround because many of the sites I attempted to scrape had Bot/DDOS protection on them provided by cloudflare.
+cloudscraper
+Three, urlib to scrape images and save them.
+
+Specific Changes for Final Project for: CSCI E-7 Section 1
+1.  Added abiity to scrape recipes from other sites.
+2.  Used regex to parse prep time (hh:mm).
+3.  Used regex to parse cook time (hh:mm).
+4.  Used urlib to save image to file.
